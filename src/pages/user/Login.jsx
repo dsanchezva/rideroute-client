@@ -30,6 +30,7 @@ function Login() {
 
 
     }catch (err) {
+      console.log(err)
       if(err.respone && err.response.status === 400) {
         setErrorMessage(err.respone.data.errorMessage)
     } else {

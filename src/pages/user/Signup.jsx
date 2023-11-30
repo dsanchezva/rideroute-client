@@ -17,7 +17,7 @@ function Signup() {
     const handlePassword = (e) => setPassword(e.target.value);
 
 
-    const handleSignip = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
         const newUser = {
             username,
@@ -44,7 +44,7 @@ function Signup() {
 
   return (
     <div>
-        <form onSubmit={handleSignip}>
+        <form onSubmit={handleSignup}>
             <label  htmlFor="username">Username: </label>
             <input type="text" name='username' value={username} onChange={handleUsername}/>
             <br />

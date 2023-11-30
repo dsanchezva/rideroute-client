@@ -7,16 +7,17 @@ const service = axios.create({
 })
 
 // tell to React that in every call will send the token
-service.interceptors.request.use((req) => {
-    const token = localeStorage.getItem("authToken");
+// service.interceptors.request.use((req) => {
 
-// if token exists add it to the request
-    if (token) {
-        req.headers.authorization = `Bearer ${token}`;
-    }
+//     const token = localeStorage.getItem("authToken");
 
-    return req;
-})
+// // if token exists add it to the request
+//     if (token) {
+//         req.headers.authorization = `Bearer ${token}`;
+//     }
+
+//     return req;
+// })
 
 
 export default service;

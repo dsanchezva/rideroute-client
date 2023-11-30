@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import service from '../../services/config'
+
+
 
 function Signup() {
     const navigate = useNavigate()
@@ -21,10 +24,12 @@ function Signup() {
             email,
             password
         }
+    
         try {
             await service.post("/user/signup", newUser);
             navigate("/login");
         }catch (err) {
+            console.log(err)
             if(err.respone && err.response.status === 400) {
                 setErrorMessage(err.respone.data.errorMessage)
             } else {

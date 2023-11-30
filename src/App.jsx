@@ -7,6 +7,12 @@ import Signup from './pages/user/Signup'
 import Login from './pages/user/Login'
 import Error from './pages/error/Error'
 import NotFound from './pages/error/NotFound'
+import IsPrivate from './components/IsPrivate'
+import Profile from './pages/user/Profile'
+import RoutesList from './pages/motoRoute/RoutesList'
+import RouteCreate from './pages/motoRoute/RouteCreate'
+import RouteDetails from './pages/motoRoute/RouteDetails'
+import RouteEdit from './pages/motoRoute/RouteEdit'
 
 function App() {
 
@@ -25,7 +31,12 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           
 
-
+          //Private routes
+          <Route path="/profile" element={<IsPrivate><Profile/></IsPrivate>}/>
+          <Route path="/allRoutes" element={<IsPrivate><RoutesList/></IsPrivate>}/>
+          <Route path="/routeCreate" element={<IsPrivate><RouteCreate/></IsPrivate>}/>
+          <Route path="/routeDetails/:routeId" element={<IsPrivate><RouteDetails/></IsPrivate>}/>
+          <Route path="/routeEdit/:routeId" element={<IsPrivate><RouteEdit/></IsPrivate>}/>
 
 
 

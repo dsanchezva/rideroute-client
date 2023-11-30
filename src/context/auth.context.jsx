@@ -6,39 +6,33 @@ const AuthContext = createContext();
 const AuthWrapper = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-    const authenticateUser = async () => {
-
-        try{
-            const response = await service.get("/user/verify");
-            setIsLoggedIn(true)
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 2500)
-            
-            
-            
-        }catch (err) {
-            console.log(err)
-            setIsLoggedIn(false)
-            setIsLoading(false)
-        }
+  const [loggedUser, setLoggedUser] = useState(null);
+  const authenticateUser = async () => {
+    try {
+      const response = await service.get("/user/verify");
+      setIsLoggedIn(true);
+      setLoggedUser(response.data.payload);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2500);
+    } catch (err) {
+      console.log(err);
+      setIsLoggedIn(false);
+      setIsLoading(false);
     }
-    
-    useEffect(() => {
-        authenticateUser()
-    }, [])
-    
-    
-    const passedContext = {
-        authenticateUser,
-        isLoggedIn
-    } 
+  };
 
+  useEffect(() => {
+    authenticateUser();
+  }, []);
 
+  const passedContext = {
+    authenticateUser,
+    isLoggedIn,
+    loggedUser,
+  };
 
   if (isLoading) {
-
     return (
       <div>
         <div id="loop" className={"center"}></div>
@@ -50,12 +44,9 @@ const AuthWrapper = (props) => {
   }
   return (
     <AuthContext.Provider value={passedContext}>
-        {props.children}
+      {props.children}
     </AuthContext.Provider>
-  )
+  );
 };
 
-export {
-    AuthContext,
-    AuthWrapper
-}
+export { AuthContext, AuthWrapper };

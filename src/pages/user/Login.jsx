@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import service from '../../services/config'
+import { AuthContext } from '../../context/auth.context'
 
 function Login() {
   const navigate = useNavigate()
-
+  const { authenticateUser} = useContext(AuthContext);
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -24,7 +25,7 @@ function Login() {
       const response = await service.post("/user/login", credentials);
 
       localStorage.setItem("authToken", response.data.authToken);
-
+      await authenticateUser()
       navigate("/")
 
 

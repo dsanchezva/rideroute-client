@@ -63,7 +63,6 @@ function EditMotorbike() {
         model: modelSelected.trim(),
         user: loggedUser,
         year: yearSelected,
-        motoPicture: imageSelected,
       });
       navigate("/home");
     } catch (error) {
@@ -116,6 +115,9 @@ function EditMotorbike() {
           value={yearSelected}
         />
         <br />
+        <button type="submit">Update</button>
+      </form>
+      <form onSubmit={handleSendPicture}>
         <label htmlFor="motoPicture">Motorbike image : </label>
         <input
           type="file"

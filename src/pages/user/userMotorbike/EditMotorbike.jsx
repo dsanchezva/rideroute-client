@@ -8,10 +8,12 @@ function EditMotorbike() {
   const { loggedUser } = useContext(AuthContext);
   const [modelValue, setModelValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
 
   const [makeValue, setMakeValue] = useState("");
   const [modelSelected, setModelSelected] = useState("");
   const [yearSelected, setYearSelected] = useState(0);
+  const [imageSelected, setImageSelected] = useState(null);
 
   const handleMake = (e) => {
     setMakeValue(e.target.value);
@@ -30,31 +32,46 @@ function EditMotorbike() {
   };
 
   const handleYear = (e) => setYearSelected(e.target.value);
+  const handleImage = async (e) => {
+    if (!e.target.files[0]) {
+      return;
+    }
+    setIsUploading(true);
+    const uploadData = new FormData();
+    uploadData.append("motoPicture", e.target.files[0]);
 
-  const handleSelectOnChange = (e) => {
-    setModelSelected(e.target.value);
+    try {
+      const response = await service.patch("/user/editMotoPicture", uploadData);
+      setImageSelected(response.data.motoPicture);
+      setIsUploading(false);
+    } catch (error) {
+      navigate("/error");
+    }
   };
+  const handleSelectOnChange = (e) => setModelSelected(e.target.value);
 
   useEffect(() => {
     handleSelect();
   }, [makeValue]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await service.patch("user/editMotorbikeDetails", {
+      await service.patch("user/editMotorbikeDetails", {
         make: makeValue,
         model: modelSelected.trim(),
         user: loggedUser,
         year: yearSelected,
       });
-      console.log(response.data);
+      navigate("/home");
     } catch (error) {
       console.log(error);
       navigate("/error");
     }
   };
 
-  if (isLoading === true) {
+  if (isLoading === true || isUploading === true) {
     return (
       <div>
         <div id="loop" className={"center"}></div>
@@ -68,9 +85,16 @@ function EditMotorbike() {
   return (
     <div>
       <h1>EDIT MOTORBIKE</h1>
-      <label htmlFor="make">Maker : </label>
-      <input type="text" name="make" value={makeValue} onChange={handleMake} />
+
       <form onSubmit={handleSubmit}>
+        <label htmlFor="make">Maker : </label>
+        <input
+          type="text"
+          name="make"
+          value={makeValue}
+          onChange={handleMake}
+        />
+        <br />
         <label htmlFor="model">Model : </label>
         <select name="model" onChange={handleSelectOnChange}>
           <option value="">Select model : </option>
@@ -82,6 +106,7 @@ function EditMotorbike() {
             );
           })}
         </select>
+        <br />
         <label htmlFor="year">Year : </label>
         <input
           type="number"
@@ -89,6 +114,26 @@ function EditMotorbike() {
           onChange={handleYear}
           value={yearSelected}
         />
+        <br />
+        <button type="submit">Update</button>
+      </form>
+      <form onSubmit={handleSendPicture}>
+        <label htmlFor="motoPicture">Motorbike image : </label>
+        <input
+          type="file"
+          name="motoPicture"
+          accept="image/png, image/jpeg"
+          onChange={handleImage}
+          disabled={isUploading}
+        />
+        <br />
+        {imageSelected ? (
+          <div>
+            <img src={imageSelected} alt="img" width={200} />
+          </div>
+        ) : null}
+
+        <br />
         <button type="submit">Update</button>
       </form>
     </div>

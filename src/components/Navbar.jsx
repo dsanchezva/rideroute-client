@@ -18,7 +18,7 @@ function Navbar() {
     return (
       <nav>
         <NavLink to="/home">Home</NavLink>
-        <NavLink to="/editMoto">Edit Moto</NavLink>
+        <NavLink to="/profile">Profile</NavLink>
         <button onClick={handleLogout}>Logout</button>
         <br />
         <NavLink to="/routeCreate">Crear ruta</NavLink>

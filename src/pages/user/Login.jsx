@@ -26,7 +26,7 @@ function Login() {
 
       localStorage.setItem("authToken", response.data.authToken);
       await authenticateUser()
-      navigate("/")
+      navigate("/home")
 
 
 

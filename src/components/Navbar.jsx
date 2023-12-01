@@ -17,9 +17,11 @@ function Navbar() {
   if (isLoggedIn) {
     return (
       <nav>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/home">Home</NavLink>
         <NavLink to="/editMoto">Edit Moto</NavLink>
         <button onClick={handleLogout}>Logout</button>
+        <br />
+        <NavLink to="/routeCreate">Crear ruta</NavLink>
       </nav>
     );
   } else {

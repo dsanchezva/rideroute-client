@@ -41,7 +41,10 @@ function EditMotorbike() {
     uploadData.append("motoPicture", e.target.files[0]);
 
     try {
-      const response = await service.patch("/user/editMotoPicture", uploadData);
+      const response = await service.patch(
+        "/user/uploadMotoPicture",
+        uploadData
+      );
       setImageSelected(response.data.motoPicture);
       setIsUploading(false);
     } catch (error) {
@@ -58,13 +61,26 @@ function EditMotorbike() {
     e.preventDefault();
 
     try {
-      await service.patch("user/editMotorbikeDetails", {
+      await service.patch("/user/editMotorbikeDetails", {
         make: makeValue,
         model: modelSelected.trim(),
         user: loggedUser,
         year: yearSelected,
       });
       navigate("/home");
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
+  };
+  const handleSubmitPicture = async (e) => {
+    e.preventDefault();
+    try {
+      await service.patch("/user/editMotorbikePicture", {
+        user: loggedUser,
+        motoPicture: imageSelected,
+      });
+      navigate("/profile");
     } catch (error) {
       console.log(error);
       navigate("/error");
@@ -85,7 +101,6 @@ function EditMotorbike() {
   return (
     <div>
       <h1>EDIT MOTORBIKE</h1>
-
       <form onSubmit={handleSubmit}>
         <label htmlFor="make">Maker : </label>
         <input
@@ -116,8 +131,10 @@ function EditMotorbike() {
         />
         <br />
         <button type="submit">Update</button>
+        <br />
+        <br />
       </form>
-      <form onSubmit={handleSendPicture}>
+      <form onSubmit={handleSubmitPicture}>
         <label htmlFor="motoPicture">Motorbike image : </label>
         <input
           type="file"
@@ -126,16 +143,16 @@ function EditMotorbike() {
           onChange={handleImage}
           disabled={isUploading}
         />
-        <br />
-        {imageSelected ? (
-          <div>
-            <img src={imageSelected} alt="img" width={200} />
-          </div>
-        ) : null}
 
         <br />
-        <button type="submit">Update</button>
+        <button type="submit">Update motorbike picture</button>
       </form>
+      <br />
+      {imageSelected ? (
+        <div>
+          <img src={imageSelected} alt="img" width={200} />
+        </div>
+      ) : null}
     </div>
   );
 }

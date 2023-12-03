@@ -15,6 +15,7 @@ import RouteDetails from "./pages/motoRoute/RouteDetails";
 import RouteEdit from "./pages/motoRoute/RouteEdit";
 import EditMotorbike from "./pages/user/userMotorbike/EditMotorbike";
 import MainPage from "./pages/MainPage";
+import UserEdit from "./pages/user/UserEdit";
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
           element={
             <IsPrivate>
               <Profile />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/editUser"
+          element={
+            <IsPrivate>
+              <UserEdit />
             </IsPrivate>
           }
         />
@@ -77,15 +86,39 @@ function App() {
             </IsPrivate>
           }
         />
-
-        <Route path="/home" element={<IsPrivate><MainPage/></IsPrivate>}/>
-
-          //MotoRoutes urls
-          <Route path="/routeCreate" element={<IsPrivate><MainPage/></IsPrivate>}/>
-          <Route path="/routeDetails/:routeId" element={<IsPrivate><MainPage/></IsPrivate>}/>
-          <Route path="/routeEdit/:routeId" element={<IsPrivate><MainPage/></IsPrivate>}/>
-          
-
+        <Route
+          path="/home"
+          element={
+            <IsPrivate>
+              <MainPage />
+            </IsPrivate>
+          }
+        />
+        //MotoRoutes urls
+        <Route
+          path="/routeCreate"
+          element={
+            <IsPrivate>
+              <MainPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/routeDetails/:routeId"
+          element={
+            <IsPrivate>
+              <MainPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/routeEdit/:routeId"
+          element={
+            <IsPrivate>
+              <MainPage />
+            </IsPrivate>
+          }
+        />
         {/* //Error Routes */}
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />

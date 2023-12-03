@@ -67,7 +67,7 @@ function EditMotorbike() {
         user: loggedUser,
         year: yearSelected,
       });
-      navigate("/home");
+      navigate("/profile");
     } catch (error) {
       console.log(error);
       navigate("/error");

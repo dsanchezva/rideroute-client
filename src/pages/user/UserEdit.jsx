@@ -7,7 +7,6 @@ function UserEdit() {
   const navigate = useNavigate();
   const [usernameValue, setUsernameValue] = useState("");
   const [emailValue, setEmailSelected] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const { loggedUser } = useContext(AuthContext);
   const [imageSelected, setImageSelected] = useState(null);
@@ -63,19 +62,7 @@ function UserEdit() {
     }
   };
 
-  //   const getUserData = async () => {
-  //     try {
-  //       const user = await service.get("/user/info", {
-  //         user: loggedUser,
-  //       });
-  //       console.log(user);
-  //     } catch (error) {
-  //       navigate("/error");
-  //     }
-  //   };
-  //   getUserData();
-
-  if (isLoading === true || isUploading === true) {
+  if (isUploading === true) {
     return (
       <div>
         <div id="loop" className={"center"}></div>

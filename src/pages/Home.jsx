@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../context/auth.context'
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
+const {isLoggedIn} = useContext(AuthContext)
+
+
+
+
+
   return (
-    <div>
-        <h1>Home</h1>
-    </div>
+    <Link to={"/login"}>
+        <img src="../../public/images/black.png" alt="rideroute-logo" />
+    </Link>
   )
 }
 

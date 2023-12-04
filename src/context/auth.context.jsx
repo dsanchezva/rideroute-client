@@ -7,6 +7,8 @@ const AuthWrapper = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loggedUser, setLoggedUser] = useState(null);
+  
+
   const authenticateUser = async () => {
     try {
       const response = await service.get("/user/verify");

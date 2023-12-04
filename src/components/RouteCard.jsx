@@ -10,9 +10,9 @@ function RouteCard(props) {
   return (
     <div id='route-Card'>
        <Link to={`/routeDetails/${_id}`} >
-        <div>
+        <div className='user-info'>
             <h3>{user.username}</h3>
-            <img src={user.userPicture} alt="motoimg" style={{width: "20px"}}/>
+            <img src={user.userPicture} alt="motoimg"/>
         </div>
         <div>
             <RouteMap origin={origin} destiny={destiny}/>

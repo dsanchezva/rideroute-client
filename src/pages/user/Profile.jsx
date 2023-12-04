@@ -25,7 +25,7 @@ function Profile() {
     getUserData();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     try {
       await service.post("/user/delete", {
@@ -42,6 +42,7 @@ function Profile() {
     }
   };
 
+  // Spinner cuando carga la imagen solo en el botón de carga de imagen  y deshabilitar botones de envío
   if (isLoading) {
     return (
       <div>
@@ -113,11 +114,10 @@ function Profile() {
       </div>
       {/*End user profile page*/}
       <br />
-      <form onSubmit={handleSubmit}>
-        <button type="submit" style={{ backgroundColor: "red" }}>
-          Delete profile
-        </button>
-      </form>
+
+      <button onClick={handleDelete} style={{ backgroundColor: "red" }}>
+        Delete profile
+      </button>
     </div>
   );
 }

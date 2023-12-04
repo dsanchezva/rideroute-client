@@ -17,6 +17,7 @@ function RouteDetails() {
   useEffect(()=> {
     getData()
   },[])
+  
   //search the route id the DB
   const getData = async () => {
 

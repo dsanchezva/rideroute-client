@@ -1,12 +1,21 @@
-import React from 'react'
+import { useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 function RouteMap(props) {
-    
+  console.log(props)
+  const { origin, destiny } = props;
+
+  const [center, setCenter] = useState(origin);
   return (
-    <div>
-        <h3>Aqui va el mapa</h3>
-    </div>
-  )
+    <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      {/* invoke Marker Componentes here */}
+    </MapContainer>
+  );
 }
 
-export default RouteMap
+export default RouteMap;

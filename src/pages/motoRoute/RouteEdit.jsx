@@ -22,6 +22,7 @@ function RouteEdit() {
   const [description, setDescription] = useState("");
   const [origin, setOrigin] = useState([]);
   const [destiny, setDestiny] = useState([]);
+  const [firstDataIsLoaded, setFirstDataIsLoaded] = useState(false)
   
   //state handlers
   const handleDescription = (e) => setDescription(e.target.value);
@@ -46,7 +47,7 @@ function RouteEdit() {
   }
   useEffect(() => {
     setUser(loggedUser._id);
-    if(!clickedPositionOrigin  && !clickedPositionDestiny) {
+    if(!firstDataIsLoaded) {
       getRouteToEdit();
     } else {
       setIsLoading(false);
@@ -59,8 +60,13 @@ function RouteEdit() {
       setOrigin(response.data.origin);
       setDestiny(response.data.destiny);
       setIsLoading(false);
+      setFirstDataIsLoaded(true);
     } catch (err) {
-      console.log(err);
+      if (err.response && err.response.status === 400) {
+        setErrorMessage(err.response.data.errorMessage);
+      } else {
+        navigate(`/routeDetails/${params.routeId}`);
+      }
     }
   };
 
@@ -73,19 +79,17 @@ function RouteEdit() {
 
     const routeData = {
       description,
-      user,
       origin,
       destiny,
-      country,
     };
     try {
-      await service.post("/routes/create", routeData);
-      navigate("/home");
+      await service.patch(`/routes/${params.routeId}/editRoute`, routeData);
+      navigate(`/routeDetails/${params.routeId}`);
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setErrorMessage(err.response.data.errorMessage);
       } else {
-        navigate("/error");
+        navigate(`/routeDetails/${params.routeId}`);
       }
     }
   };
@@ -102,21 +106,23 @@ function RouteEdit() {
   }
 
   return (
-    <div>
-      <h3>Create a new route</h3>
+    <div className="edit-container">
+      <h3>Edit the route</h3>
 
      
-      <br />
-      
-      <div>
+      <div className="route-edit-button">
+      {markerOriginVisible ? <p>Click on the map and set a new route origin</p> : <p>Click on the map and set a new route Destiny</p>}
         <button onClick={handleSetNewOrigin}>Set Origin</button>
         <input type="text" value={clickedPositionOrigin} disabled={true}/>
         <br />
-        <button onClick={handleSetNewDestiny}>Set Destiny</button>
+        <button onClick={handleSetNewDestiny} >Set Destiny</button>
         <input type="text" value={clickedPositionDestiny} disabled={true}/>
         <br />
         <button onClick={handleUpdateRouter}>View new route</button>
         <br />
+      </div>
+
+      <div className="edit-map-container">
         <MapContainer center={origin} zoom={1} scrollWheelZoom={true}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -133,18 +139,20 @@ function RouteEdit() {
         </MapContainer>
       </div>
       <br />
-      <form onSubmit={handleSubmitAll}>
-        <label htmlFor="description">Description : </label>
-        <textarea
+      <div>
+        <form onSubmit={handleSubmitAll}>
+          <label htmlFor="description">Description : </label>
+          <textarea
           type="text"
           name="description"
           onChange={handleDescription}
           value={description}
-        />
-        <br />
-        <button type="submit">Update All</button>
-      </form>
-      <p>{errorMessage}</p>
+          />
+          <br />
+          <button type="submit">Update All</button>
+        </form>
+        <p>{errorMessage}</p>
+      </div>
 
     </div>
   );

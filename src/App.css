@@ -1,13 +1,21 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem 2rem 2rem ;
   text-align: center;
 }
 
+.dark-page {
+  background-color: black;
+
+}
+.light-page {
+  background-color: #808080;
+}
+
 .leaflet-container {
-  height: 400px; /* example */
-  width: 800px; /* example */
+  height: 30vh; /* example */
+  width: 70vw; /* example */
   color: black;
   border-radius: 15px;
 }
@@ -34,13 +42,59 @@ align-items: center;
 .user-info {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  gap: 5px;
   border: 1px solid white;
   box-sizing: border-box;
 }
 .user-info img {
-  border-radius: 75px;
-  width: 150px;
-  height: 150px;
+  border-radius: 50%;
+  width: 5vw;
+}
+
+.edit-container {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center; 
+}
+
+.edit-map-container {
+  margin: 50px auto;
+}
+.leaflet-right{
+  display: none;
+}
+.route-edit-button button{
+  width: 100px;
+  margin: 5px;
+}
+.edit-container textarea {
+  width:100%;
+  direction:rtl;
+  display:block;
+  max-width:100%;
+  line-height:1.5;
+  padding:15px 15px 30px;
+  border-radius:3px;
+  border:1px solid #F7E98D;
+  font:13px Tahoma, cursive;
+  transition:box-shadow 0.5s ease;
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+  
+}
+.Navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.Navbar img {
+  width: 200px;
+}
+.navbar-btn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }

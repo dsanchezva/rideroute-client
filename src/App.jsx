@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
@@ -16,13 +16,15 @@ import RouteEdit from "./pages/motoRoute/RouteEdit";
 import EditMotorbike from "./pages/user/userMotorbike/EditMotorbike";
 import MainPage from "./pages/MainPage";
 import UserEdit from "./pages/user/UserEdit";
+import { ThemeContext } from "./context/theme.context";
+
 
 function App() {
+  const {selectedPageTheme} = useContext(ThemeContext)
+  console.log(selectedPageTheme)
   return (
-    <>
+    <div className={selectedPageTheme}>
       <Navbar />
-      <hr />
-      <h3>RIDEROUTE</h3>
       <br />
 
       <Routes>
@@ -123,7 +125,7 @@ function App() {
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+      </div>
   );
 }
 

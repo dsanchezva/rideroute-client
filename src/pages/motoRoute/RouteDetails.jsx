@@ -24,7 +24,6 @@ function RouteDetails() {
     try {
       const response = await service.get(`/routes/${params.routeId}/info`)
       setRouteDetails(response.data)
-      console.log(response.data)
       if (response.data.user._id === loggedUser._id){
         setIsOwner(true);
       }

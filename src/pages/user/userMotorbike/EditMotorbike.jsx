@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../../../services/config";
-import { AuthContext } from "../../../context/auth.context";
 
 function EditMotorbike() {
   const navigate = useNavigate();
-  const { loggedUser } = useContext(AuthContext);
   const [modelValue, setModelValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
@@ -64,7 +62,6 @@ function EditMotorbike() {
       await service.patch("/user/editMotorbikeDetails", {
         make: makeValue,
         model: modelSelected.trim(),
-        user: loggedUser,
         year: yearSelected,
       });
       navigate("/profile");
@@ -77,7 +74,6 @@ function EditMotorbike() {
     e.preventDefault();
     try {
       await service.patch("/user/editMotorbikePicture", {
-        user: loggedUser,
         motoPicture: imageSelected,
       });
       navigate("/profile");

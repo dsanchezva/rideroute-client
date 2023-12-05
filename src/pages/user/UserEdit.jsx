@@ -38,7 +38,6 @@ function UserEdit() {
     e.preventDefault();
     try {
       await service.patch("/user/editUser", {
-        user: loggedUser,
         username: usernameValue,
         email: emailValue,
       });
@@ -52,7 +51,6 @@ function UserEdit() {
     e.preventDefault();
     try {
       await service.patch("/user/editUserPicture", {
-        user: loggedUser,
         userPicture: imageSelected,
       });
       navigate("/profile");

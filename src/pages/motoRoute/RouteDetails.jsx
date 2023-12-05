@@ -8,6 +8,7 @@ function RouteDetails() {
   const params = useParams();
   const { loggedUser } = useContext(AuthContext);
   const [routeDetails, setRouteDetails] = useState(null);
+  const [newComment, setNewComment] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +26,10 @@ function RouteDetails() {
       }
       setIsLoading(false);
     } catch (err) {}
+  };
+
+  const handleNewComment = () => {
+    setNewComment(true);
   };
 
   const handleDeleteRoute = async () => {
@@ -84,5 +89,7 @@ function RouteDetails() {
   );
 }
 import { AuthContext } from "../../context/auth.context";
+import CommentList from "../../components/CommentList";
+import CommentCreate from "../comment/CommentCreate";
 
 export default RouteDetails;

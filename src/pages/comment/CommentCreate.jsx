@@ -14,10 +14,11 @@ function CommentCreate(props) {
   const handleNewComent = async (e) => {
     e.preventDefault();
     try {
-      const comment = service.post(`/comment/${params.routeId}/create`, {
+      service.post(`/comment/${params.routeId}/create`, {
         comment: newComment,
       });
       props.addComment(false);
+      props.getAllComments();
       navigate(`/routeDetails/${params.routeId}`);
     } catch (error) {
       console.log(error);

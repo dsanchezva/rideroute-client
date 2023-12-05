@@ -14,7 +14,7 @@ function RouteCard(props) {
             <h3>{user.username}</h3>
             <img src={user.userPicture} alt="motoimg"/>
         </div>
-        <div>
+        <div className='map-container'>
             <RouteMap origin={origin} destiny={destiny}/>
         </div>
         </Link>

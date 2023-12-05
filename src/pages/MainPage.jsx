@@ -5,7 +5,6 @@ import RoutesList from "./motoRoute/RoutesList";
 function MainPage() {
   return (
     <div>
-      <h1>PRUEBA</h1>
       <RoutesList></RoutesList>
     </div>
   );

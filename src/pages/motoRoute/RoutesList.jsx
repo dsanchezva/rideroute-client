@@ -40,7 +40,7 @@ function RoutesList() {
       )}
   return (
     <div className='route-container'>
-        <h3>RoutesList</h3>
+        <h1>All routes</h1>
         <div id='list-container'>
         {allRoutes.map((eachRoute, index)=>{
           return <RouteCard  key={index} data={eachRoute}/>

@@ -1,30 +1,40 @@
 #root {
-  max-width: 1280px;
+  max-width: 100vw;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 0 2rem 2rem 2rem ;
+  padding: 0;
   text-align: center;
 }
-
+body {
+  margin: 0px;
+}
 .dark-page {
   background-color: black;
+  color: white;
+  min-height: 100vh;
 
 }
 .light-page {
   background-color: #808080;
+  color: black;
+  min-height: 100vh;
 }
 
 .leaflet-container {
   height: 30vh; /* example */
-  width: 70vw; /* example */
+  width: 400px; /* example */
   color: black;
   border-radius: 15px;
+  margin: 10px;
 }
 
-.list-container {
+#list-container {
 display: flex;
-flex-direction: column;
-justify-content: space-around;
+flex-direction: row;
+justify-content: center;
 align-items: center;
+gap: 10px;
+flex-wrap: wrap;
 
 }
 
@@ -36,7 +46,16 @@ align-items: center;
   border: 1px solid white;
   margin-top: 5%;
   box-sizing: border-box;
+  margin-bottom: 50px;
+  border-radius: 15px;
+  width: 450px;
 
+}
+.map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-info {
@@ -47,6 +66,9 @@ align-items: center;
   gap: 5px;
   border: 1px solid white;
   box-sizing: border-box;
+  border-radius: 15px 15px 0 0;
+  margin-bottom: 5px;
+  width: 450px;
 }
 .user-info img {
   border-radius: 50%;
@@ -88,13 +110,48 @@ align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 10px;
+  padding: 10px;
 }
 .Navbar img {
-  width: 200px;
+  width: 250px;
 }
 .navbar-btn {
   display: flex;
   flex-direction: row;
   gap: 10px;
+}
+
+.routeInfo-user {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between;
+}
+.routeInfo-user img {
+  width: 100px;
+  border-radius: 50px;
+}
+.routeInfo-user-data {
+  display: flex;
+  flex-direction: row;
+  gap: 10px
+}
+.routeInfo-moto {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.detail-page-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+.details-owner-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
 }

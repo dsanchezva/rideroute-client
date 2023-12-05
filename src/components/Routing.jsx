@@ -3,6 +3,7 @@ import L from "leaflet";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 import { useMap } from "react-leaflet";
+import "lrm-graphhopper";
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
@@ -16,6 +17,7 @@ export default function Routing(props) {
 
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(origin[0], origin[1]), L.latLng(destiny[0], destiny[1])],
+      // router: L.Routing.graphHopper('d58eef46-f761-4a49-8217-36d03862226f'),
       routeWhileDragging: true
     }).addTo(map);
 

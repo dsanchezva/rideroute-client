@@ -31,7 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        //Private routes
+        {/* //Private routes */}
         <Route
           path="/profile"
           element={
@@ -96,7 +96,7 @@ function App() {
             </IsPrivate>
           }
         />
-        //MotoRoutes urls
+        {/* //MotoRoutes urls */}
         <Route
           path="/routeCreate"
           element={

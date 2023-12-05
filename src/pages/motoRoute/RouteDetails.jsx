@@ -53,14 +53,20 @@ function RouteDetails() {
   }
 
   return (
-    <div>
+    <div className="detail-page-container">
       <h3>Details</h3>
-      <div>
+      <div className="routeInfo-user">
+        <div className="routeInfo-user-data">
         <h4>{routeDetails.user.username}</h4>
+        <img src={routeDetails.user.userPicture} alt="user-picture" />
+        </div>
+        <div className="routeInfo-moto">
+        <h4>{routeDetails.user.motoMake} {routeDetails.user.motoModel}</h4>
         <img src={routeDetails.user.motoPicture} alt="user-moto-picture" />
+        </div>
       </div>
       <div>
-        <h5>{routeDetails.country}</h5>
+        
         <p>{routeDetails.description}</p>
         <div>
           <RouteMap
@@ -68,6 +74,7 @@ function RouteDetails() {
             destiny={routeDetails.destiny}
           />
         </div>
+         <div className="details-owner-btn">
         {isOwner ? (
           <button onClick={handleDeleteRoute}>Delete Route</button>
         ) : (
@@ -78,6 +85,7 @@ function RouteDetails() {
         ) : (
           <></>
         )}
+         </div>
       </div>
       <div>
         <h3>Comentarios aqui</h3>

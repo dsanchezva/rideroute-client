@@ -11,9 +11,7 @@ function Profile() {
 
   const getUserData = async () => {
     try {
-      const user = await service.post("/user/details", {
-        user: loggedUser,
-      });
+      const user = await service.get("/user/details");
       setUserData(user.data.user);
       setIsLoading(false);
     } catch (error) {
@@ -28,13 +26,9 @@ function Profile() {
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      await service.post("/user/delete", {
-        user: loggedUser,
-      });
+      await service.delete("/user/delete");
       localStorage.removeItem("authToken");
-
       authenticateUser();
-
       navigate("/");
       setIsLoading(false);
     } catch (error) {

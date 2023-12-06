@@ -55,13 +55,17 @@ function RouteDetails() {
       <div className="routeInfo-user">
         <div className="routeInfo-user-data">
           <h4>{routeDetails.user.username}</h4>
+          <div className="img-container-details">
           <img src={routeDetails.user.userPicture} alt="user-picture" />
+          </div>
         </div>
         <div className="routeInfo-moto">
           <h4>
             {routeDetails.user.motoMake} {routeDetails.user.motoModel}
           </h4>
+          <div className="img-container-details">
           <img src={routeDetails.user.motoPicture} alt="user-moto-picture" />
+          </div>
         </div>
       </div>
       <div>

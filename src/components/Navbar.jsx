@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { ThemeContext } from "../context/theme.context";
+import { Switch } from 'antd';
 
 function Navbar() {
   const { isLoggedIn, authenticateUser } = useContext(AuthContext);
@@ -36,7 +37,7 @@ function Navbar() {
     return (
       <nav className="Navbar">
         <div>
-        <NavLink to="/home"><img src="../../public/images/letter.png" alt="logo" /></NavLink> 
+        <NavLink to="/home"><img src="/images/letter.png" alt="logo" /></NavLink> 
         </div>
         <div className="navbar-btn">
         <NavLink to="/home" style={toggleStyles}>Routes</NavLink>
@@ -45,7 +46,7 @@ function Navbar() {
         <br />
         <NavLink to="/routeCreate" style={toggleStyles}>Crear ruta</NavLink>
         </div>
-        <button onClick={toggleTheme}>Theme</button>
+        <Switch defaultChecked onClick={toggleTheme} handleBg={"red"}/>
       </nav>
     );
   } else {
@@ -56,7 +57,7 @@ function Navbar() {
         <NavLink to="/signup" style={toggleStyles}>Register</NavLink>
         <NavLink to="/login" style={toggleStyles}>Access</NavLink>
         </div>
-        <button onClick={toggleTheme}>Theme</button>
+        <Switch defaultChecked onClick={toggleTheme} handleBg={"red"}/>
       </nav>
     );
   }

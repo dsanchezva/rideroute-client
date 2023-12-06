@@ -6,8 +6,8 @@ import RouteMap from "../../components/RouteMap";
 import ClickMarker from "../../components/ClickMarker";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Routing from "../../components/Routing";
-
-
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 
 function RouteEdit() {
@@ -139,10 +139,11 @@ function RouteEdit() {
         </MapContainer>
       </div>
       <br />
-      <div>
+      <div className="editRoute-description">
         <form onSubmit={handleSubmitAll}>
           <label htmlFor="description">Description : </label>
-          <textarea
+          <TextArea
+          rows={4}
           type="text"
           name="description"
           onChange={handleDescription}

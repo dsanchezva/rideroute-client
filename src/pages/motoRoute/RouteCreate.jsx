@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import service from "../../services/config";
+import Form from 'react-bootstrap/Form';
+
+
 
 function RouteCreate() {
   const navigate = useNavigate();
@@ -118,10 +121,11 @@ function RouteCreate() {
   };
 
   return (
-    <div>
+    <div className="create-route-container">
       <h3>Create a new route</h3>
 
       <br />
+      
       <label htmlFor="country">Country : </label>
       <input
         type="text"
@@ -136,8 +140,8 @@ function RouteCreate() {
         <input type="text" name="origin" onChange={handleSearchOrigin} />
         <button type="submit">Search</button>
       </form>
-      <form>
-        <select name="origin" onChange={handleOrigin}>
+    
+        <Form.Select aria-label="Default select example" name="origin" onChange={handleOrigin}>
           <option>Select Origin Adress : </option>
           {allOriginAddresses.map((eachOrigin, index) => {
             return (
@@ -146,8 +150,8 @@ function RouteCreate() {
               </option>
             );
           })}
-        </select>
-      </form>
+        </Form.Select>
+      
       {/* search the adress Destiny */}
       <form onSubmit={handleSearchAdressDestiny}>
         <label htmlFor="origin">City Destiny : </label>

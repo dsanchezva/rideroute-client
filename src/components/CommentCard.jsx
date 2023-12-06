@@ -32,7 +32,9 @@ function CommentCard(props) {
     <div style={styleComment}>
       <span>
         User : {props.username}{" "}
+        <div className='img-container-list'>
         <img src={props.userimage} alt="userpicture" width={"80px"} />
+        </div>
       </span>
       <p>{props.comment}</p>
       <div style={styleButtons}>

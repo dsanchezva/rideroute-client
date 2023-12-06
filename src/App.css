@@ -113,17 +113,6 @@ flex-wrap: wrap;
 }
 .edit-container textarea {
   width:100%;
-  direction:rtl;
-  display:block;
-  max-width:100%;
-  line-height:1.5;
-  padding:15px 15px 30px;
-  border-radius:3px;
-  border:1px solid #ae8436;
-  font:13px Tahoma, cursive;
-  transition:box-shadow 0.5s ease;
-  box-shadow:0 4px 6px rgba(0,0,0,0.1);
-  
 }
 .Navbar {
   display: flex;
@@ -183,4 +172,51 @@ flex-wrap: wrap;
   margin: 0 auto;
   max-width: 100%;
   width: 80%;
+}
+.editRoute-description{
+  min-width: 89vw;
+  max-width: 90vw;
+}
+.commentEdit-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.create-route-container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+}
+.create-route-container Textarea {
+  min-width: 79vw;
+  max-width: 80vw;
+}
+.create-route-container Button {
+  color: Black;
+  background-color: grey;
+}
+.create-route-container select{
+  height: 20px;
+  width: 200px;
+
+}
+select {
+  height: 20px;
+  width: 200px;
+  background-color: white;
+  color: black;
+}
+input {
+  width: 200px;
+  height: 20px;
+  background-color: white;
+  color: black;
+  margin-right: 10px;
+}
+label {
+  display: block;
+
 }

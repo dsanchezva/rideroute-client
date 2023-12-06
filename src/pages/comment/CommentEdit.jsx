@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import service from "../../services/config";
 import { useNavigate, useParams } from "react-router";
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 function CommentEdit() {
   const navigate = useNavigate();
@@ -47,16 +49,19 @@ function CommentEdit() {
   }
 
   return (
-    <div>
+    <div className="commentEdit-page">
       <form onSubmit={handleEditComment}>
         <label htmlFor="comment">Comment</label>
-        <textarea
+        <div className="editRoute-description">
+        <TextArea 
+          rows={4}
           name="comment"
           cols="30"
-          rows="5"
+          
           onChange={handleComment}
           value={newComment}
-        ></textarea>
+        />
+        </div>
         <button type="submit">Edit</button>
       </form>
     </div>

@@ -2,6 +2,8 @@ import { useNavigate, useParams } from "react-router";
 import service from "../../services/config";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 function CommentCreate(props) {
   const navigate = useNavigate();
@@ -31,13 +33,15 @@ function CommentCreate(props) {
       <form>
         <label htmlFor="comment">Comment</label>
         <br />
-        <textarea
+        <div className="editRoute-description">
+        <TextArea 
+          rows={4}
           name="comment"
           cols="30"
-          rows="5"
           onChange={handleComment}
           value={newComment}
-        ></textarea>
+        />
+        </div>
         <br />
         <button onClick={handleNewComent}>Create</button>
       </form>

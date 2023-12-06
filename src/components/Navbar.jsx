@@ -15,14 +15,33 @@ function Navbar() {
   const toggleStyles = (navInfo) => {
     return navInfo.isActive === true ? activeStyles : inActiveStyles;
   };
-
-  const activeStyles = {
+  let activeStyles= {};
+  let inActiveStyles={};
+ if (darkTheme) {
+  activeStyles = {
     textDecoration: "underline",
+    color: "white",
+    backgroundColor: "black",
   };
 
-  const inActiveStyles = {
+  inActiveStyles = {
     textDecoration: "none",
+    color: "Black",
+    backgroundColor: "grey", 
   };
+} else {
+  activeStyles = {
+    textDecoration: "underline",
+    color: "orange",
+    backgroundColor: "grey",
+  };
+
+  inActiveStyles = {
+    textDecoration: "none",
+    color: "Black",
+    backgroundColor: "white", 
+  };
+}
 
 
   const handleLogout = () => {
@@ -42,11 +61,13 @@ function Navbar() {
         <div className="navbar-btn">
         <NavLink to="/home" style={toggleStyles}>Routes</NavLink>
         <NavLink to="/profile" style={toggleStyles}>Profile</NavLink>
-        <button onClick={handleLogout}>Logout</button>
         <br />
         <NavLink to="/routeCreate" style={toggleStyles}>Crear ruta</NavLink>
         </div>
+        <div>
         <Switch defaultChecked onClick={toggleTheme} handleBg={"red"}/>
+        <button onClick={handleLogout}>Logout</button>
+        </div>
       </nav>
     );
   } else {

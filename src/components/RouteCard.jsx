@@ -11,11 +11,14 @@ function RouteCard(props) {
     
 
   return (
+    
     <div id='route-Card'>
        <Link to={`/routeDetails/${_id}`} >
         <div className='user-info'>
             <h3>{user.username}</h3>
+            <div className='img-container-list'>
             <img src={user.userPicture} alt="motoimg"/>
+            </div>
         </div>
         <div className='map-container'>
             <RouteMap origin={origin} destiny={destiny}/>

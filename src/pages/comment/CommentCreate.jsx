@@ -17,27 +17,29 @@ function CommentCreate(props) {
       service.post(`/comment/${params.routeId}/create`, {
         comment: newComment,
       });
-      props.addComment(false);
       props.getAllComments();
+      props.addComment(false);
+      props.setNewCommentAdded(true);
       navigate(`/routeDetails/${params.routeId}`);
     } catch (error) {
-      console.log(error);
       navigate("/home");
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleNewComent}>
+      <form>
         <label htmlFor="comment">Comment</label>
+        <br />
         <textarea
           name="comment"
           cols="30"
-          rows="10"
+          rows="5"
           onChange={handleComment}
           value={newComment}
         ></textarea>
-        <button type="submit">Create</button>
+        <br />
+        <button onClick={handleNewComent}>Create</button>
       </form>
     </div>
   );

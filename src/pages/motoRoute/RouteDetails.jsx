@@ -54,16 +54,17 @@ function RouteDetails() {
       <h3>Details</h3>
       <div className="routeInfo-user">
         <div className="routeInfo-user-data">
-        <h4>{routeDetails.user.username}</h4>
-        <img src={routeDetails.user.userPicture} alt="user-picture" />
+          <h4>{routeDetails.user.username}</h4>
+          <img src={routeDetails.user.userPicture} alt="user-picture" />
         </div>
         <div className="routeInfo-moto">
-        <h4>{routeDetails.user.motoMake} {routeDetails.user.motoModel}</h4>
-        <img src={routeDetails.user.motoPicture} alt="user-moto-picture" />
+          <h4>
+            {routeDetails.user.motoMake} {routeDetails.user.motoModel}
+          </h4>
+          <img src={routeDetails.user.motoPicture} alt="user-moto-picture" />
         </div>
       </div>
       <div>
-        
         <p>{routeDetails.description}</p>
         <div>
           <RouteMap
@@ -71,18 +72,18 @@ function RouteDetails() {
             destiny={routeDetails.destiny}
           />
         </div>
-         <div className="details-owner-btn">
-        {isOwner ? (
-          <button onClick={handleDeleteRoute}>Delete Route</button>
-        ) : (
-          <></>
-        )}
-        {isOwner ? (
-          <button onClick={handleUpdateRoute}>Edit Route</button>
-        ) : (
-          <></>
-        )}
-         </div>
+        <div className="details-owner-btn">
+          {isOwner ? (
+            <button onClick={handleDeleteRoute}>Delete Route</button>
+          ) : (
+            <></>
+          )}
+          {isOwner ? (
+            <button onClick={handleUpdateRoute}>Edit Route</button>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <div>
         <h3>Comentarios aqui</h3>

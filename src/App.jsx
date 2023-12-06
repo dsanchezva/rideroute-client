@@ -17,11 +17,11 @@ import EditMotorbike from "./pages/user/userMotorbike/EditMotorbike";
 import MainPage from "./pages/MainPage";
 import UserEdit from "./pages/user/UserEdit";
 import { ThemeContext } from "./context/theme.context";
-
+import CommentEdit from "./pages/comment/CommentEdit";
 
 function App() {
-  const {selectedPageTheme} = useContext(ThemeContext)
-  console.log(selectedPageTheme)
+  const { selectedPageTheme } = useContext(ThemeContext);
+  console.log(selectedPageTheme);
   return (
     <div className={selectedPageTheme}>
       <Navbar />
@@ -121,11 +121,19 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route
+          path="/routeDetails/:routeId/comment/:commentId/edit"
+          element={
+            <IsPrivate>
+              <CommentEdit />
+            </IsPrivate>
+          }
+        />
         {/* //Error Routes */}
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      </div>
+    </div>
   );
 }
 

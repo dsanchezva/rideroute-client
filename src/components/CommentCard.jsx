@@ -17,10 +17,15 @@ function CommentCard(props) {
     e.preventDefault();
     try {
       await service.delete(`/comment/${props._id}/delete`);
+      props.getAllComments();
       navigate(`/routeDetails/${params.routeId}`);
     } catch (error) {
       navigate("/error");
     }
+  };
+
+  const handleEdit = () => {
+    navigate(`/routeDetails/${params.routeId}/comment/${props._id}/edit`);
   };
 
   return (
@@ -28,7 +33,7 @@ function CommentCard(props) {
       <h3>User : {props.username}</h3>
       <p>{props.comment}</p>
       <div style={styleButtons}>
-        <button>Edit</button>
+        <button onClick={handleEdit}>Edit</button>
         <button onClick={handleDelete}>Delete</button>
       </div>
     </div>

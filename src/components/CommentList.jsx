@@ -8,25 +8,28 @@ function CommentList(props) {
   const navigate = useNavigate();
   const [allComments, setAllComments] = useState([]);
   const [newComment, setNewComment] = useState(false);
+  const [newCommentAdded, setNewCommentAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const getAllComments = async () => {
-    console.log("Obtengo comentarios");
     try {
       const comments = await service.get(
         `/comment/${props.routeId}/allComments`
       );
       setAllComments(comments.data.comments);
+      setNewCommentAdded(false);
       setIsLoading(false);
     } catch (error) {
       navigate(error);
     }
   };
+
   const handleNewComment = () => {
     setNewComment(true);
   };
+
   useState(() => {
     getAllComments();
-  }, []);
+  }, [newCommentAdded && getAllComments()]);
 
   if (isLoading) {
     return (
@@ -38,15 +41,21 @@ function CommentList(props) {
       </div>
     );
   }
-
-  if (allComments !== null) {
+  if (
+    typeof allComments != "undefined" &&
+    allComments != null &&
+    allComments.length != null &&
+    allComments.length > 0
+  ) {
     return (
       <div style={{ backgroundColor: "lightblue" }}>
         <button onClick={handleNewComment}>New Comment</button>
+
         {newComment && (
           <CommentCreate
             addComment={setNewComment}
             getAllComments={getAllComments}
+            setNewCommentAdded={setNewCommentAdded}
           />
         )}
         {allComments.map((eachComment, index) => {
@@ -55,6 +64,7 @@ function CommentList(props) {
               key={index}
               username={eachComment.user.username}
               comment={eachComment.comment}
+              getAllComments={getAllComments}
               _id={eachComment._id}
             />
           );
@@ -70,6 +80,7 @@ function CommentList(props) {
           <CommentCreate
             addComment={setNewComment}
             getAllComments={getAllComments}
+            setNewCommentAdded={setNewCommentAdded}
           />
         )}
       </div>

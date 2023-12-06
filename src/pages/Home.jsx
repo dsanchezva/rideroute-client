@@ -12,14 +12,14 @@ const {darkTheme} = useContext(ThemeContext)
 if (darkTheme) {
   return (
     <Link to={"/login"}>
-        <img src="../../public/images/black.png" alt="rideroute-logo" />
+        <img src="/images/black.png" alt="rideroute-logo" />
     </Link>
   )
 } else {
 
   return (
     <Link to={"/login"}>
-        <img src="../../public/images/grey.png" alt="rideroute-logo" />
+        <img src="/images/grey.png" alt="rideroute-logo" />
     </Link>
   )
 }

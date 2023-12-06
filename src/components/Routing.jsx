@@ -17,7 +17,7 @@ export default function Routing(props) {
 
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(origin[0], origin[1]), L.latLng(destiny[0], destiny[1])],
-      // router: L.Routing.graphHopper('d58eef46-f761-4a49-8217-36d03862226f'),
+      // router: L.Routing.graphHopper(import.meta.env.VITE_KEY_ROUTIN),
       routeWhileDragging: true
     }).addTo(map);
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import service from "../services/config";
 import CommentCard from "./CommentCard";
 import { useNavigate } from "react-router";
@@ -8,7 +8,7 @@ function CommentList(props) {
   const navigate = useNavigate();
   const [allComments, setAllComments] = useState([]);
   const [newComment, setNewComment] = useState(false);
-  const [newCommentAdded, setNewCommentAdded] = useState(false);
+  const [newCommentAdded, setNewCommentAdded] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const getAllComments = async () => {
     try {
@@ -27,9 +27,9 @@ function CommentList(props) {
     setNewComment(true);
   };
 
-  useState(() => {
-    getAllComments();
-  }, [newCommentAdded && getAllComments()]);
+  useEffect(() => {
+    if (newCommentAdded && getAllComments());
+  }, [newCommentAdded]);
 
   if (isLoading) {
     return (
@@ -41,12 +41,7 @@ function CommentList(props) {
       </div>
     );
   }
-  if (
-    typeof allComments != "undefined" &&
-    allComments != null &&
-    allComments.length != null &&
-    allComments.length > 0
-  ) {
+  if (allComments) {
     return (
       <div style={{ backgroundColor: "lightblue" }}>
         <button onClick={handleNewComment}>New Comment</button>
@@ -59,30 +54,18 @@ function CommentList(props) {
           />
         )}
         {allComments.map((eachComment, index) => {
+          console.log(eachComment.user);
           return (
             <CommentCard
               key={index}
               username={eachComment.user.username}
+              userimage={eachComment.user.userPicture}
               comment={eachComment.comment}
               getAllComments={getAllComments}
               _id={eachComment._id}
             />
           );
         })}
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <h3>Be the first comment!</h3>
-        <button onClick={handleNewComment}>New Comment</button>
-        {newComment && (
-          <CommentCreate
-            addComment={setNewComment}
-            getAllComments={getAllComments}
-            setNewCommentAdded={setNewCommentAdded}
-          />
-        )}
       </div>
     );
   }

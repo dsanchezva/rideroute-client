@@ -27,10 +27,13 @@ function CommentCard(props) {
   const handleEdit = () => {
     navigate(`/routeDetails/${params.routeId}/comment/${props._id}/edit`);
   };
-
+  console.log(props);
   return (
     <div style={styleComment}>
-      <h3>User : {props.username}</h3>
+      <span>
+        User : {props.username}{" "}
+        <img src={props.userimage} alt="userpicture" width={"80px"} />
+      </span>
       <p>{props.comment}</p>
       <div style={styleButtons}>
         <button onClick={handleEdit}>Edit</button>

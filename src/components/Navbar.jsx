@@ -36,7 +36,7 @@ function Navbar() {
     return (
       <nav className="Navbar">
         <div>
-        <NavLink to="/home"><img src="../../public/images/letter.png" alt="logo" /></NavLink> 
+        <NavLink to="/home"><img src="/images/letter.png" alt="logo" /></NavLink> 
         </div>
         <div className="navbar-btn">
         <NavLink to="/home" style={toggleStyles}>Routes</NavLink>

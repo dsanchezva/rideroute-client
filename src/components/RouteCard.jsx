@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import RouteMap from './RouteMap'
+import { Card } from 'antd';
+
+const { Meta } = Card;
 
 function RouteCard(props) {
     const { destiny, origin, user, _id } = props.data;

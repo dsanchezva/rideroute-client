@@ -16,7 +16,7 @@ header {
   width: 100%;
 }
 .dark-page {
-  background-color: black;
+  background-color: #242424;
   color: white;
   min-height: 100vh;
 }
@@ -27,11 +27,11 @@ header {
 }
 
 .leaflet-container {
-  height: 30vh; /* example */
-  width: 400px; /* example */
+  height: 30vh;
+  /* width: 400px; */
   color: black;
-  border-radius: 15px;
-  margin: 10px;
+  border-radius: 8px;
+  /* margin: 10px; */
 }
 
 #list-container {
@@ -116,20 +116,19 @@ header {
   width: 100%;
 }
 .Navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 10px;
+  /* display: flex;
+  flex-direction: row; */
+  /* justify-content: space-around; */
 }
 .Navbar img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  width: 200px;
+  width: 150px;
 }
 .navbar-btn {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
 }
 
 .routeInfo-user {

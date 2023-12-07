@@ -4,6 +4,9 @@ import service from "../../services/config";
 import RouteMap from "../../components/RouteMap";
 import { AuthContext } from "../../context/auth.context";
 import CommentList from "../../components/CommentList";
+import { Avatar, Card, Divider } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import Meta from "antd/es/card/Meta";
 
 function RouteDetails() {
   const navigate = useNavigate();
@@ -48,49 +51,41 @@ function RouteDetails() {
       </div>
     );
   }
+  const { username, motoMake, motoModel } = routeDetails.user;
 
   return (
     <div className="detail-page-container">
-      <h3>Details</h3>
-      <div className="routeInfo-user">
-        <div className="routeInfo-user-data">
-          <h4>{routeDetails.user.username}</h4>
-          <div className="img-container-details">
-          <img src={routeDetails.user.userPicture} alt="user-picture" />
-          </div>
-        </div>
-        <div className="routeInfo-moto">
-          <h4>
-            {routeDetails.user.motoMake} {routeDetails.user.motoModel}
-          </h4>
-          <div className="img-container-details">
-          <img src={routeDetails.user.motoPicture} alt="user-moto-picture" />
-          </div>
-        </div>
-      </div>
-      <div>
-        <p>{routeDetails.description}</p>
-        <div>
+      <Card
+        style={{
+          width: 800,
+        }}
+        cover={
           <RouteMap
             origin={routeDetails.origin}
             destiny={routeDetails.destiny}
           />
-        </div>
-        <div className="details-owner-btn">
-          {isOwner ? (
-            <button onClick={handleDeleteRoute}>Delete Route</button>
-          ) : (
-            <></>
-          )}
-          {isOwner ? (
-            <button onClick={handleUpdateRoute}>Edit Route</button>
-          ) : (
-            <></>
-          )}
-        </div>
-      </div>
+        }
+        actions={
+          isOwner && [
+            <EditOutlined key="edit" onClick={handleUpdateRoute} />,
+            <DeleteOutlined key="delete" onClick={handleDeleteRoute} />,
+          ]
+        }
+      >
+        <Divider />
+        <Meta
+          avatar={<Avatar src={routeDetails.user.userPicture} />}
+          title={`${username}`}
+        />
+        <Divider />
+        <Meta
+          avatar={<Avatar src={routeDetails.user.motoPicture} />}
+          title={`${motoMake} ${motoModel}`}
+        />
+        <Divider />
+        <Meta description={routeDetails.description} />
+      </Card>
       <div>
-        <h3>Comentarios aqui</h3>
         <CommentList routeId={params.routeId} />
       </div>
     </div>

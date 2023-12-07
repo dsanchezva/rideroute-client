@@ -47,7 +47,8 @@ function CommentList(props) {
   }
   if (allComments) {
     return (
-      <div style={{ backgroundColor: "lightblue", padding: "100px" }}>
+      <div>
+        <Divider />
         <Button onClick={handleNewComment}>New Comment</Button>
         <Divider />
         {newComment && (
@@ -70,6 +71,7 @@ function CommentList(props) {
             />
           );
         })}
+        <Divider />
       </div>
     );
   }

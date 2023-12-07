@@ -41,7 +41,7 @@ function CommentCard(props) {
 
   return (
     <div>
-      <Card style={{ width: 300, marginTop: 16 }} actions={actions}>
+      <Card style={{ width: 400, marginTop: 16 }} actions={actions}>
         <Meta
           avatar={<Avatar src={props.userimage} />}
           title={props.username}

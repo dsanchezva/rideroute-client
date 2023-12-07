@@ -102,12 +102,13 @@ function Login() {
             value={password}
             onChange={handlePassword}
           />
-          <p style={{ color: "red" }}>{errorMessage}</p>
-
-          <Button type="primary" htmlType="submit" onClick={handleLogin}>
-            Login
-          </Button>
         </Form.Item>
+
+        <p style={{ color: "red" }}>{errorMessage}</p>
+
+        <Button type="primary" htmlType="submit" onClick={handleLogin}>
+          Login
+        </Button>
       </Form>
     </div>
   );

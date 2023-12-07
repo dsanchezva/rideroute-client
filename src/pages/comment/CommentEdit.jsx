@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import service from "../../services/config";
 import { useNavigate, useParams } from "react-router";
-import { Input } from 'antd';
+import { Input } from "antd";
 const { TextArea } = Input;
 
 function CommentEdit() {
@@ -9,6 +9,7 @@ function CommentEdit() {
   const [newComment, setNewComment] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
+  const [errorMessage, setErrorMessage] = useState("");
   const handleComment = (e) => setNewComment(e.target.value);
   const handleEditComment = async (e) => {
     e.preventDefault();
@@ -18,8 +19,12 @@ function CommentEdit() {
       });
       navigate(`/routeDetails/${params.routeId}`);
     } catch (error) {
-      console.log(error);
-      navigate("/error");
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.errorMessage);
+        setIsLoading(false);
+      } else {
+        navigate("/error");
+      }
     }
   };
 
@@ -29,7 +34,12 @@ function CommentEdit() {
       setNewComment(response.data.comment.comment);
       setIsLoading(false);
     } catch (error) {
-      navigate("/error");
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.errorMessage);
+        setIsLoading(false);
+      } else {
+        navigate("/error");
+      }
     }
   };
 
@@ -53,17 +63,17 @@ function CommentEdit() {
       <form onSubmit={handleEditComment}>
         <label htmlFor="comment">Comment</label>
         <div className="editRoute-description">
-        <TextArea 
-          rows={4}
-          name="comment"
-          cols="30"
-          
-          onChange={handleComment}
-          value={newComment}
-        />
+          <TextArea
+            rows={4}
+            name="comment"
+            cols="30"
+            onChange={handleComment}
+            value={newComment}
+          />
         </div>
         <button type="submit">Edit</button>
       </form>
+      <p style={{ color: "red" }}>{errorMessage}</p>
     </div>
   );
 }

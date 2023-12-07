@@ -2,14 +2,14 @@ import { useNavigate, useParams } from "react-router";
 import service from "../../services/config";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
-import { Input } from 'antd';
+import { Button, Form, Input } from "antd";
 const { TextArea } = Input;
 
 function CommentCreate(props) {
   const navigate = useNavigate();
   const [newComment, setNewComment] = useState("");
   const params = useParams();
-  const { loggedUser } = useContext(AuthContext);
+  const { darkTheme } = useContext(AuthContext);
 
   const handleComment = (e) => setNewComment(e.target.value);
 
@@ -28,23 +28,51 @@ function CommentCreate(props) {
     }
   };
 
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+  };
+
   return (
     <div>
-      <form>
-        <label htmlFor="comment">Comment</label>
-        <br />
-        <div className="editRoute-description">
-        <TextArea 
-          rows={4}
+      <Form
+        name="basic"
+        labelCol={{
+          span: 6,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        initialValues={{
+          remember: true,
+        }}
+      >
+        <Form.Item
+          label={<label style={styleHandler}>Comment</label>}
           name="comment"
-          cols="30"
-          onChange={handleComment}
-          value={newComment}
-        />
-        </div>
-        <br />
-        <button onClick={handleNewComent}>Create</button>
-      </form>
+          rules={[
+            {
+              required: true,
+              message: "Please input your comment!",
+            },
+          ]}
+        >
+          <TextArea
+            rows={4}
+            name="comment"
+            cols="30"
+            onChange={handleComment}
+            value={newComment}
+          />
+        </Form.Item>
+        <Button type="primary" htmlType="submit" onClick={handleNewComent}>
+          Create
+        </Button>
+      </Form>
     </div>
   );
 }

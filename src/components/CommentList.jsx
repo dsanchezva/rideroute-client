@@ -4,6 +4,7 @@ import CommentCard from "./CommentCard";
 import { useNavigate } from "react-router";
 import CommentCreate from "../pages/comment/CommentCreate";
 import { AuthContext } from "../context/auth.context";
+import { Button, Divider } from "antd";
 
 function CommentList(props) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function CommentList(props) {
   };
 
   const handleNewComment = () => {
-    setNewComment(true);
+    setNewComment(!newComment);
   };
 
   useEffect(() => {
@@ -46,9 +47,9 @@ function CommentList(props) {
   }
   if (allComments) {
     return (
-      <div style={{ backgroundColor: "lightblue" }}>
-        <button onClick={handleNewComment}>New Comment</button>
-
+      <div style={{ backgroundColor: "lightblue", padding: "100px" }}>
+        <Button onClick={handleNewComment}>New Comment</Button>
+        <Divider />
         {newComment && (
           <CommentCreate
             addComment={setNewComment}

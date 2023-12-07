@@ -15,14 +15,17 @@ function ThemeWrapper(props) {
 
   const selectedPageTheme = darkTheme === true ? "dark-page" : "light-page";
 
-  const selectedBtnTheme = darkTheme === true ? "dark-btn" : "light-btn"
+  const selectedBtnTheme = darkTheme === true ? "dark-btn" : "light-btn";
+
+  const selectedTextTheme = darkTheme === true ? "dark-text" : "light-text";
 
   // se crea el objeto con todos los contextos a pasar
   const passedContext = {
     darkTheme,
     toggleTheme,
     selectedPageTheme,
-    selectedBtnTheme
+    selectedBtnTheme,
+    selectedTextTheme
   }
 
   return (

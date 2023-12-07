@@ -25,7 +25,12 @@ header {
   color: black;
   min-height: 100vh;
 }
-
+.dark-text{
+  color: white !important;
+}
+.light-text {
+  color: black !important;
+}
 .leaflet-container {
   height: 30vh;
   /* width: 400px; */

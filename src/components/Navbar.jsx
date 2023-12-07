@@ -74,6 +74,7 @@ function Navbar() {
     width: "100%",
     display: "flex",
     alignItems: "center",
+    backgroundColor: darkTheme ? "#001528" : "#ffffff",
   };
 
   if (isLoggedIn) {

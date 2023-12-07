@@ -1,66 +1,127 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import service from '../../services/config'
-
-
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import service from "../../services/config";
+import { Button, Form, Input } from "antd";
+import { ThemeContext } from "../../context/theme.context";
 
 function Signup() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const [ username, setUsername ] = useState("")
-    const [ email, setEmail ] = useState("")
-    const [ password, setPassword ] = useState("")
-    const [errorMessage, setErrorMessage ] = useState("")
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { darkTheme } = useContext(ThemeContext);
 
-    const handleUsername = (e) => setUsername(e.target.value);
-    const handleEmail = (e) => setEmail(e.target.value);
-    const handlePassword = (e) => setPassword(e.target.value);
+  const handleUsername = (e) => setUsername(e.target.value);
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
 
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const newUser = {
+      username,
+      email,
+      password,
+    };
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
-        const newUser = {
-            username,
-            email,
-            password
-        }
-    
-        try {
-            await service.post("/user/signup", newUser);
-            navigate("/login");
-        }catch (err) {
-            console.log(err)
-            if(err.respone && err.response.status === 400) {
-                setErrorMessage(err.respone.data.errorMessage)
-            } else {
-                navigate("/error");
-            }
-        }
+    try {
+      await service.post("/user/signup", newUser);
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      if (err.response && err.response.status === 400) {
+        setErrorMessage(err.response.data.errorMessage);
+      } else {
+        navigate("/error");
+      }
     }
+  };
 
-
-
-
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+  };
 
   return (
     <div>
-        <form onSubmit={handleSignup}>
-            <label  htmlFor="username">Username: </label>
-            <input type="text" name='username' value={username} onChange={handleUsername}/>
-            <br />
-            <label htmlFor="email">Email: </label>
-            <input type="email" name='email' value={email} onChange={handleEmail}/>
-            <br />
-            <label htmlFor="password">Password: </label>
-            <input type="password" name='password' value={password} onChange={handlePassword}/>
-            <br />
-            <p>{errorMessage}</p>
-            <br />
-            <button type='submit'>Create</button>
-        
-        </form>
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        initialValues={{
+          remember: true,
+        }}
+      >
+        <Form.Item
+          label={<label style={styleHandler}>Username</label>}
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input
+            type="text"
+            name="username"
+            value={username}
+            onChange={handleUsername}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={<label style={styleHandler}>Email</label>}
+          name="email"
+          rules={[
+            {
+              type: "email",
+              required: true,
+              message: "Please input your email!",
+            },
+          ]}
+        >
+          <Input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleEmail}
+          />
+        </Form.Item>
+        <Form.Item
+          label={<label style={styleHandler}>Password</label>}
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+          />
+        </Form.Item>
+
+        <p>{errorMessage}</p>
+        <Button type="primary" htmlType="submit" onClick={handleSignup}>
+          Create
+        </Button>
+      </Form>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../../services/config";
 import { AuthContext } from "../../context/auth.context";
+import { Button, Form, Input } from "antd";
+import { ThemeContext } from "../../context/theme.context";
 
 function Login() {
   const navigate = useNavigate();
   const { isLoggedIn, authenticateUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { darkTheme } = useContext(ThemeContext);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -28,8 +31,8 @@ function Login() {
       navigate("/home");
     } catch (err) {
       console.log(err);
-      if (err.respone && err.response.status === 400) {
-        setErrorMessage(err.respone.data.errorMessage);
+      if (err.response && err.response.status === 400) {
+        setErrorMessage(err.response.data.errorMessage);
       } else {
         navigate("/error");
       }
@@ -42,29 +45,70 @@ function Login() {
     }
   }, []);
 
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+  };
+
   return (
     <div>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        initialValues={{
+          remember: true,
+        }}
+      >
+        <Form.Item
+          label={<label style={styleHandler}>Username</label>}
           name="username"
-          value={username}
-          onChange={handleUsername}
-        />
-        <br />
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input
+            type="text"
+            name="username"
+            value={username}
+            onChange={handleUsername}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={<label style={styleHandler}>Password</label>}
           name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-        <br />
-        <p>{errorMessage}</p>
-        <br />
-        <button type="submit">Login</button>
-      </form>
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+          />
+          <p style={{ color: "red" }}>{errorMessage}</p>
+
+          <Button type="primary" htmlType="submit" onClick={handleLogin}>
+            Login
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }

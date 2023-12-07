@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import service from "../services/config";
 import CommentCard from "./CommentCard";
 import { useNavigate } from "react-router";
 import CommentCreate from "../pages/comment/CommentCreate";
+import { AuthContext } from "../context/auth.context";
 
 function CommentList(props) {
   const navigate = useNavigate();
   const [allComments, setAllComments] = useState([]);
   const [newComment, setNewComment] = useState(false);
   const [newCommentAdded, setNewCommentAdded] = useState(true);
+  const { loggedUser } = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState(true);
   const getAllComments = async () => {
     try {
@@ -54,13 +57,13 @@ function CommentList(props) {
           />
         )}
         {allComments.map((eachComment, index) => {
-          console.log(eachComment.user);
           return (
             <CommentCard
               key={index}
               username={eachComment.user.username}
               userimage={eachComment.user.userPicture}
               comment={eachComment.comment}
+              userId={eachComment.user._id}
               getAllComments={getAllComments}
               _id={eachComment._id}
             />

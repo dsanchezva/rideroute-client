@@ -1,9 +1,13 @@
 import { useNavigate, useParams } from "react-router";
 import service from "../services/config";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/auth.context";
 
 function CommentCard(props) {
   const navigate = useNavigate();
   const params = useParams();
+  const { loggedUser } = useContext(AuthContext);
+  const [isOwner, setIsOwner] = useState(false);
   const styleComment = {
     padding: "20px",
     backgroundColor: "brown",
@@ -23,24 +27,36 @@ function CommentCard(props) {
       navigate("/error");
     }
   };
+  const checkOwner = () => {
+    if (props.userId === loggedUser._id) {
+      setIsOwner(true);
+    } else {
+      setIsOwner(false);
+    }
+  };
+
+  useEffect(() => {
+    checkOwner();
+  }, []);
 
   const handleEdit = () => {
     navigate(`/routeDetails/${params.routeId}/comment/${props._id}/edit`);
   };
-  console.log(props);
   return (
     <div style={styleComment}>
       <span>
-        User : {props.username}{" "}
-        <div className='img-container-list'>
-        <img src={props.userimage} alt="userpicture" width={"80px"} />
+        User : {props.username}
+        <div className="img-container-list">
+          <img src={props.userimage} alt="userpicture" width={"80px"} />
         </div>
       </span>
       <p>{props.comment}</p>
-      <div style={styleButtons}>
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleDelete}>Delete</button>
-      </div>
+      {isOwner && (
+        <div style={styleButtons}>
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleDelete}>Delete</button>
+        </div>
+      )}
     </div>
   );
 }

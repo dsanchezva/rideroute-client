@@ -2,13 +2,27 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import service from "../../services/config";
+import { EditOutlined } from "@ant-design/icons";
+import { Button, Card, Divider, Modal } from "antd";
 
 function Profile() {
   const navigate = useNavigate();
   const { loggedUser, authenticateUser } = useContext(AuthContext);
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const getUserData = async () => {
     try {
       const user = await service.get("/user/details");
@@ -58,60 +72,70 @@ function Profile() {
     motoPicture,
   } = userData;
 
-  const styleProfile = {
+  const styleCards = {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
   };
+
+  const styleProfile = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    maxWidth: "400px",
+    boxShadow: "10px 10px 5px 0px rgba(45,54,214,1)",
+  };
+
+  const handleEditUser = () => {
+    navigate("/editUser");
+  };
+
+  const handleEditMoto = () => {
+    navigate("/editMoto");
+  };
+
   return (
     <div>
       <h3>Profile</h3>
       <br />
       {/* User profile page*/}
-      <div style={styleProfile}>
-        <div>
-          <h3>User Details</h3>
-          <img
-            src={userPicture}
-            alt="ProfilePicture"
-            width="200px"
-            height="150px"
-          />
-          <br />
+      <div style={styleCards}>
+        <Card
+          style={styleProfile}
+          cover={<img alt="ProfilePicture" src={userPicture} />}
+          actions={[<EditOutlined key="edit" onClick={handleEditUser} />]}
+        >
           <p>Username : {username}</p>
           <p>Email : {email}</p>
           <p>Role : {role}</p>
-          <div>
-            <Link to={"/editUser"}>
-              <button>User edit</button>
-            </Link>
-          </div>
-        </div>
-        <div>
-          <h3>Motorbike Details</h3>
-          <img
-            src={motoPicture}
-            alt="MotorbikePicture"
-            width="200px"
-            height="150px"
-          />
-          <br />
+        </Card>
+
+        {/*End user profile page*/}
+        <Card
+          style={styleProfile}
+          cover={<img alt="ProfilePicture" src={motoPicture} />}
+          actions={[<EditOutlined key="edit" onClick={handleEditMoto} />]}
+        >
           <p>Maker : {motoMake}</p>
           <p>Model : {motoModel}</p>
           <p>Year : {motoYear}</p>
-          <div>
-            <Link to={"/editMoto"}>
-              <button>Motorbike edit</button>
-            </Link>
-          </div>
-        </div>
+        </Card>
       </div>
-      {/*End user profile page*/}
-      <br />
-
-      <button onClick={handleDelete} style={{ backgroundColor: "red" }}>
+      <Divider />
+      <Button type="primary" danger onClick={showModal}>
         Delete profile
-      </button>
+      </Button>
+      <Modal
+        title="Delete profile"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Do you really want to delete your profile?</p>
+        <Button type="primary" danger onClick={handleDelete}>
+          Delete profile
+        </Button>
+      </Modal>
     </div>
   );
 }

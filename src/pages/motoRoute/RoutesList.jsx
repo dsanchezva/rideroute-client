@@ -21,12 +21,9 @@ const onShowSizeChange = (current, pageSize) => {
 }
   useEffect(() => {
     getData()
-    console.log("useEffect", pageSize)
   },[pageSize])
 
   const getData = async (sendPage) => {
-    console.log(sendPage)
-    console.log("getData", pageSize)
     try {
       const response = await service.patch("/routes/all", {sendPage, pageSize} )
       setAllRoutes(response.data.routes)

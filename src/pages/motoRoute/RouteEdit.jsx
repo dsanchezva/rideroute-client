@@ -6,9 +6,9 @@ import RouteMap from "../../components/RouteMap";
 import ClickMarker from "../../components/ClickMarker";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Routing from "../../components/Routing";
-import { Input } from 'antd';
+import { Button, Divider, Form, Input } from "antd";
+import { ThemeContext } from "../../context/theme.context";
 const { TextArea } = Input;
-
 
 function RouteEdit() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,37 +17,38 @@ function RouteEdit() {
   const { loggedUser } = useContext(AuthContext);
   const [user, setUser] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
- 
+
   //data to send to create
   const [description, setDescription] = useState("");
   const [origin, setOrigin] = useState([]);
   const [destiny, setDestiny] = useState([]);
-  const [firstDataIsLoaded, setFirstDataIsLoaded] = useState(false)
-  
+  const [firstDataIsLoaded, setFirstDataIsLoaded] = useState(false);
+  const { darkTheme } = useContext(ThemeContext);
+
   //state handlers
   const handleDescription = (e) => setDescription(e.target.value);
   const [clickedPositionOrigin, setClickedPositionOrigin] = useState(null);
   const [clickedPositionDestiny, setClickedPositionDestiny] = useState(null);
 
-  const [markerOriginVisible, setMarkerOriginVisible] = useState(true)
-  const [markerDestinyVisible, setMarkerDestinyVisible] = useState(true)
+  const [markerOriginVisible, setMarkerOriginVisible] = useState(true);
+  const [markerDestinyVisible, setMarkerDestinyVisible] = useState(true);
 
   const handleSetNewOrigin = () => {
-    setMarkerOriginVisible(false)
-    setOrigin(clickedPositionOrigin)
-  }
+    setMarkerOriginVisible(false);
+    setOrigin(clickedPositionOrigin);
+  };
 
   const handleSetNewDestiny = () => {
-    setMarkerDestinyVisible(false)
-    setDestiny(clickedPositionDestiny)
-  }
-  
+    setMarkerDestinyVisible(false);
+    setDestiny(clickedPositionDestiny);
+  };
+
   const handleUpdateRouter = () => {
-    setIsLoading(true)
-  }
+    setIsLoading(true);
+  };
   useEffect(() => {
     setUser(loggedUser._id);
-    if(!firstDataIsLoaded) {
+    if (!firstDataIsLoaded) {
       getRouteToEdit();
     } else {
       setIsLoading(false);
@@ -70,9 +71,6 @@ function RouteEdit() {
     }
   };
 
-  
- 
-
   // Send all the data to de BackEnd
   const handleSubmitAll = async (e) => {
     e.preventDefault();
@@ -94,6 +92,10 @@ function RouteEdit() {
     }
   };
 
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+  };
+
   if (isLoading) {
     return (
       <div>
@@ -106,55 +108,75 @@ function RouteEdit() {
   }
 
   return (
-    <div className="edit-container">
-      <h3>Edit the route</h3>
+    <div className="detail-page-container">
+      <Form
+        style={{
+          width: 800,
+        }}
+      >
+        <h3 style={styleHandler}>Edit the route</h3>
+        {markerOriginVisible ? (
+          <p style={styleHandler}>
+            Click on the map and set a new route origin
+          </p>
+        ) : (
+          <p style={styleHandler}>
+            Click on the map and set a new route Destiny
+          </p>
+        )}
+        <Button type="primary" onClick={handleSetNewOrigin}>
+          Set Origin
+        </Button>
+        <Input type="text" value={clickedPositionOrigin} disabled={true} />
+        <Divider />
+        <Button type="primary" onClick={handleSetNewDestiny}>
+          Set Destiny
+        </Button>
+        <Input type="text" value={clickedPositionDestiny} disabled={true} />
+        <Divider />
+        <Button type="primary" onClick={handleUpdateRouter}>
+          Route view
+        </Button>
+        <Divider />
+        <Form.Item>
+          <MapContainer center={origin} zoom={1} scrollWheelZoom={true}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Routing origin={origin} destiny={destiny} />
 
-     
-      <div className="route-edit-button">
-      {markerOriginVisible ? <p>Click on the map and set a new route origin</p> : <p>Click on the map and set a new route Destiny</p>}
-        <button onClick={handleSetNewOrigin}>Set Origin</button>
-        <input type="text" value={clickedPositionOrigin} disabled={true}/>
-        <br />
-        <button onClick={handleSetNewDestiny} >Set Destiny</button>
-        <input type="text" value={clickedPositionDestiny} disabled={true}/>
-        <br />
-        <button onClick={handleUpdateRouter}>View new route</button>
-        <br />
-      </div>
-
-      <div className="edit-map-container">
-        <MapContainer center={origin} zoom={1} scrollWheelZoom={true}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Routing origin={origin} destiny={destiny} />
-
-          {markerOriginVisible ? <ClickMarker setClickedPosition={setClickedPositionOrigin} /> : null}
-          {/* invoke Marker Componentes here */}
-          { clickedPositionOrigin !== null && <Marker position={clickedPositionOrigin} /> }
-          {markerDestinyVisible ? <ClickMarker setClickedPosition={setClickedPositionDestiny} /> : null}
-          {/* invoke Marker Componentes here */}
-          { clickedPositionDestiny !== null && <Marker position={clickedPositionDestiny} /> }
-        </MapContainer>
-      </div>
-      <br />
-      <div className="editRoute-description">
-        <form onSubmit={handleSubmitAll}>
-          <label htmlFor="description">Description : </label>
-          <TextArea
-          rows={4}
-          type="text"
+            {markerOriginVisible ? (
+              <ClickMarker setClickedPosition={setClickedPositionOrigin} />
+            ) : null}
+            {clickedPositionOrigin !== null && (
+              <Marker position={clickedPositionOrigin} />
+            )}
+            {markerDestinyVisible ? (
+              <ClickMarker setClickedPosition={setClickedPositionDestiny} />
+            ) : null}
+            {clickedPositionDestiny !== null && (
+              <Marker position={clickedPositionDestiny} />
+            )}
+          </MapContainer>
+        </Form.Item>
+        <Form.Item
+          label={<label style={styleHandler}>Description </label>}
           name="description"
-          onChange={handleDescription}
-          value={description}
+        >
+          <TextArea
+            rows={4}
+            type="text"
+            name="description"
+            onChange={handleDescription}
+            value={description}
           />
-          <br />
-          <button type="submit">Update All</button>
-        </form>
+        </Form.Item>
+        <Button type="primary" htmlType="submit" onClick={handleSubmitAll}>
+          Update all
+        </Button>
         <p>{errorMessage}</p>
-      </div>
-
+      </Form>
     </div>
   );
 }

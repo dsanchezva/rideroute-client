@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import service from "../../services/config";
 import { useNavigate, useParams } from "react-router";
-import { Input } from "antd";
+import { Button, Form, Input } from "antd";
+import { AuthContext } from "../../context/auth.context";
 const { TextArea } = Input;
 
 function CommentEdit() {
@@ -10,6 +11,7 @@ function CommentEdit() {
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
   const [errorMessage, setErrorMessage] = useState("");
+  const { darkTheme } = useContext(AuthContext);
   const handleComment = (e) => setNewComment(e.target.value);
   const handleEditComment = async (e) => {
     e.preventDefault();
@@ -58,21 +60,40 @@ function CommentEdit() {
     );
   }
 
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+  };
+
   return (
     <div className="commentEdit-page">
-      <form onSubmit={handleEditComment}>
-        <label htmlFor="comment">Comment</label>
-        <div className="editRoute-description">
-          <TextArea
-            rows={4}
-            name="comment"
-            cols="30"
-            onChange={handleComment}
-            value={newComment}
-          />
-        </div>
-        <button type="submit">Edit</button>
-      </form>
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        initialValues={{
+          remember: true,
+        }}
+      >
+        <TextArea
+          rows={10}
+          name="comment"
+          cols="200"
+          onChange={handleComment}
+          value={newComment}
+        />
+        <Button type="primary" htmlType="submit" onClick={handleEditComment}>
+          Edit
+        </Button>
+      </Form>
       <p style={{ color: "red" }}>{errorMessage}</p>
     </div>
   );

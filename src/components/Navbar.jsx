@@ -102,8 +102,6 @@ function Navbar() {
               <Menu.Item key="3" icon={<NodeIndexOutlined />}>
                 <NavLink to="/routeCreate">Create route</NavLink>
               </Menu.Item>
-            </Menu>
-            <Menu theme={darkTheme ? "dark" : "light"} mode="horizontal">
               <Menu.Item key="4">
                 <Button onClick={handleLogout} icon={<LogoutOutlined />}>
                   Logout

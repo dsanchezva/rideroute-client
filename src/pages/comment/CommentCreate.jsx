@@ -31,7 +31,6 @@ function CommentCreate(props) {
   const styleHandler = {
     color: darkTheme ? "white" : "black",
   };
-
   return (
     <div>
       <Form
@@ -51,24 +50,13 @@ function CommentCreate(props) {
           remember: true,
         }}
       >
-        <Form.Item
-          label={<label style={styleHandler}>Comment</label>}
+        <TextArea
+          rows={4}
           name="comment"
-          rules={[
-            {
-              required: true,
-              message: "Please input your comment!",
-            },
-          ]}
-        >
-          <TextArea
-            rows={4}
-            name="comment"
-            cols="30"
-            onChange={handleComment}
-            value={newComment}
-          />
-        </Form.Item>
+          cols="30"
+          onChange={handleComment}
+          value={newComment}
+        />
         <Button type="primary" htmlType="submit" onClick={handleNewComent}>
           Create
         </Button>

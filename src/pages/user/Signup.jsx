@@ -115,7 +115,7 @@ function Signup() {
           />
         </Form.Item>
 
-        <p>{errorMessage}</p>
+        <p style={{ color: "red" }}>{errorMessage}</p>
         <Button type="primary" htmlType="submit" onClick={handleSignup}>
           Create
         </Button>

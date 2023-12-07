@@ -18,6 +18,7 @@ import MainPage from "./pages/MainPage";
 import UserEdit from "./pages/user/UserEdit";
 import { ThemeContext } from "./context/theme.context";
 import CommentEdit from "./pages/comment/CommentEdit";
+import Footer from "./components/Footer";
 
 function App() {
   const { selectedPageTheme } = useContext(ThemeContext);
@@ -133,6 +134,7 @@ function App() {
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

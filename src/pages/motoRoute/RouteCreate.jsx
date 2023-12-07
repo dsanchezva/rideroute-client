@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import service from "../../services/config";
 import { ThemeContext } from "../../context/theme.context";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Divider, Form, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 function RouteCreate() {
@@ -143,7 +143,14 @@ function RouteCreate() {
   };
 
   return (
-    <div className="create-route-container">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <h3>Create a new route</h3>
 
       <br />
@@ -174,6 +181,7 @@ function RouteCreate() {
           Search
         </Button>
       </Form>
+      <Divider />
 
       <Form>
         {/* <Select
@@ -193,6 +201,7 @@ function RouteCreate() {
           })}
         </select>
       </Form>
+      <Divider />
 
       {/* search the adress Destiny */}
       <Form>
@@ -210,6 +219,8 @@ function RouteCreate() {
           Search
         </Button>
       </Form>
+      <Divider />
+
       <Form>
         <select name="destiny" onChange={handleDestiny}>
           <option>Select Destiny Adress : </option>
@@ -222,7 +233,8 @@ function RouteCreate() {
           })}
         </select>
       </Form>
-      <br />
+      <Divider />
+
       <Form>
         <Form.Item
           label={<label style={styleHandler}>Description </label>}

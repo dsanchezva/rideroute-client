@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import service from '../../services/config';
 import RouteCard from '../../components/RouteCard';
+import { Pagination } from 'antd';
 
 function RoutesList() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function RoutesList() {
   const getData = async () => {
 
     try {
-      const response = await service.get("/routes/all")
+      const response = await service.get("/routes/all", )
       console.log(response.data)
       setAllRoutes(response.data)
       setIsLoading(false)
@@ -26,7 +27,9 @@ function RoutesList() {
   }
 
 
-
+const handlePagination = (pageNumber) => {
+  console.log(pageNumber)
+}
 
 
   if(isLoading) {
@@ -45,9 +48,8 @@ function RoutesList() {
         {allRoutes.map((eachRoute, index)=>{
           return <RouteCard  key={index} data={eachRoute}/>
         })}
-
         </div>
-
+        <Pagination showQuickJumper defaultCurrent={2} total={10} onChange={handlePagination} />
     </div>
   )
 }

@@ -197,10 +197,10 @@ header {
   align-items: center;
   gap: 10px;
 }
-.create-route-container Textarea {
+/* .create-route-container Textarea {
   min-width: 79vw;
   max-width: 80vw;
-}
+} */
 .create-route-container Button {
   color: Black;
   background-color: grey;
@@ -225,6 +225,6 @@ input {
 label {
   display: block;
 }
-.ant-select-selector{
+.ant-select-selector {
   display: none !important;
 }

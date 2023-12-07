@@ -2,19 +2,22 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import service from "../../services/config";
-import Form from 'react-bootstrap/Form';
-
-
+import { ThemeContext } from "../../context/theme.context";
+import { Button, Divider, Form, Input, Select } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 function RouteCreate() {
   const navigate = useNavigate();
   const { loggedUser } = useContext(AuthContext);
   const [user, setUser] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { darkTheme } = useContext(ThemeContext);
+
   //data to send to create
   const [description, setDescription] = useState("");
   const [country, setCountry] = useState("Spain");
   const [origin, setOrigin] = useState([]);
+  const [originSelect, setOriginSelect] = useState([]);
   const [destiny, setDestiny] = useState([]);
   //state handlers
   const handleDescription = (e) => setDescription(e.target.value);
@@ -43,6 +46,7 @@ function RouteCreate() {
 
   useEffect(() => {
     setUser(loggedUser._id);
+    handleOptions();
   }, []);
 
   // Search the Origin address
@@ -62,6 +66,8 @@ function RouteCreate() {
         };
       });
       console.log(dataToRender);
+      handleOptions();
+
       setAllOriginAddresses(dataToRender);
     } catch (err) {
       if (err.response && err.response.status === 400) {
@@ -120,28 +126,71 @@ function RouteCreate() {
     }
   };
 
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+  };
+
+  const handleOptions = () => {
+    let optionsArray = [];
+    allOriginAddresses.map((eachOrigin) => {
+      optionsArray.push({
+        value: eachOrigin.coordinates,
+        label: `${eachOrigin.name} from ${eachOrigin.state}`,
+      });
+    });
+    setOriginSelect(optionsArray);
+    console.log(optionsArray);
+  };
+
   return (
-    <div className="create-route-container">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <h3>Create a new route</h3>
 
       <br />
-      
-      <label htmlFor="country">Country : </label>
-      <input
-        type="text"
+      <Form.Item
+        label={<label style={styleHandler}>Country </label>}
         name="country"
-        onChange={handleCountry}
-        value={country}
-      />
-      <br />
+      >
+        <Input
+          type="text"
+          name="country"
+          onChange={handleCountry}
+          defaultValue={country}
+        />
+      </Form.Item>
       {/* search the adress origin */}
-      <form onSubmit={handleSearchAdressOrigin}>
-        <label htmlFor="origin">City Origin : </label>
-        <input type="text" name="origin" onChange={handleSearchOrigin} />
-        <button type="submit">Search</button>
-      </form>
-    
-        <Form.Select aria-label="Default select example" name="origin" onChange={handleOrigin}>
+      <Form>
+        <Form.Item
+          label={<label style={styleHandler}>City Origin </label>}
+          name="origin"
+        >
+          <Input type="text" name="origin" onChange={handleSearchOrigin} />
+        </Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={handleSearchAdressOrigin}
+        >
+          Search
+        </Button>
+      </Form>
+      <Divider />
+
+      <Form>
+        {/* <Select
+          name="origin"
+          onChange={handleOrigin}
+          placeholder="Select Origin Adress :"
+          options={originSelect}
+        /> */}
+        <select name="origin" onChange={handleOrigin}>
           <option>Select Origin Adress : </option>
           {allOriginAddresses.map((eachOrigin, index) => {
             return (
@@ -150,16 +199,30 @@ function RouteCreate() {
               </option>
             );
           })}
-        </Form.Select>
-      
+        </select>
+      </Form>
+      <Divider />
+
       {/* search the adress Destiny */}
-      <form onSubmit={handleSearchAdressDestiny}>
-        <label htmlFor="origin">City Destiny : </label>
-        <input type="text" name="origin" onChange={handleSearchDestiny} />
-        <button type="submit">Search</button>
-      </form>
-      <form>
-        <select name="origin" onChange={handleDestiny}>
+      <Form>
+        <Form.Item
+          label={<label style={styleHandler}>City Destiny </label>}
+          name="destiny"
+        >
+          <Input type="text" name="destiny" onChange={handleSearchDestiny} />
+        </Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={handleSearchAdressDestiny}
+        >
+          Search
+        </Button>
+      </Form>
+      <Divider />
+
+      <Form>
+        <select name="destiny" onChange={handleDestiny}>
           <option>Select Destiny Adress : </option>
           {allDestinyAddresses.map((eachDestiny, index) => {
             return (
@@ -169,19 +232,26 @@ function RouteCreate() {
             );
           })}
         </select>
-      </form>
-      <br />
-      <form onSubmit={handleSubmitAll}>
-        <label htmlFor="description">Description : </label>
-        <textarea
-          type="text"
+      </Form>
+      <Divider />
+
+      <Form>
+        <Form.Item
+          label={<label style={styleHandler}>Description </label>}
           name="description"
-          onChange={handleDescription}
-          value={description}
-        />
-        <br />
-        <button type="submit">Update All</button>
-      </form>
+        >
+          <TextArea
+            rows={4}
+            cols="40"
+            name="description"
+            onChange={handleDescription}
+            value={description}
+          />
+        </Form.Item>
+        <Button type="primary" htmlType="submit" onClick={handleSubmitAll}>
+          Create route
+        </Button>
+      </Form>
       <p>{errorMessage}</p>
     </div>
   );

@@ -83,9 +83,9 @@ function Navbar() {
         <Header style={styleHeader}>
           <nav className="Navbar">
             <div style={styleLogo}>
-              <a href="/home">
+              <NavLink to="/home">
                 <img src={logoPic} alt="logo" />
-              </a>
+              </NavLink>
             </div>
             <Menu
               theme={darkTheme ? "dark" : "light"}
@@ -93,12 +93,11 @@ function Navbar() {
               defaultSelectedKeys={["1"]}
             >
               <Menu.Item key="1" icon={<HomeOutlined />}>
-                <NavLink to="/home">Home</NavLink>
+                <NavLink to="/allRoutes">Home</NavLink>
               </Menu.Item>
               <Menu.Item key="2" icon={<UserOutlined />}>
                 <NavLink to="/profile">Profile</NavLink>
               </Menu.Item>
-              <br />
               <Menu.Item key="3" icon={<NodeIndexOutlined />}>
                 <NavLink to="/routeCreate">Create route</NavLink>
               </Menu.Item>

@@ -14,7 +14,7 @@ function RoutesList() {
   const [allRoutes, setAllRoutes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(8);
   const [totalElement, setTotalElement] = useState(0);
 
   const onShowSizeChange = (current, pageSize) => {

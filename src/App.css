@@ -218,3 +218,6 @@ input {
 label {
   display: block;
 }
+.ant-select-selector{
+  display: none !important;
+}

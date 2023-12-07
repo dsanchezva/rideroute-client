@@ -3,23 +3,34 @@ import { useNavigate } from 'react-router-dom'
 import service from '../../services/config';
 import RouteCard from '../../components/RouteCard';
 import { Pagination } from 'antd';
+const onShowSizeChange = (current, pageSize) => {
+  console.log(current, pageSize);
+};
 
 function RoutesList() {
   const navigate = useNavigate();
 
  const [ allRoutes, setAllRoutes] = useState(null)
  const [ isLoading, setIsLoading] = useState(true)
+ const [currentPage, setCurrentPage] = useState(1);
+const [pageSize, setPageSize] = useState(10);
+const [totalElement, setTotalElement] = useState(0)
 
+const onShowSizeChange = (current, pageSize) => {
+  setPageSize(pageSize);
+}
   useEffect(() => {
     getData()
-  },[])
+    console.log("useEffect", pageSize)
+  },[pageSize])
 
-  const getData = async () => {
-
+  const getData = async (sendPage) => {
+    console.log(sendPage)
+    console.log("getData", pageSize)
     try {
-      const response = await service.get("/routes/all", )
-      console.log(response.data)
-      setAllRoutes(response.data)
+      const response = await service.patch("/routes/all", {sendPage, pageSize} )
+      setAllRoutes(response.data.routes)
+      setTotalElement(response.data.size)
       setIsLoading(false)
     } catch (err) {
       navigate("/error")
@@ -27,9 +38,12 @@ function RoutesList() {
   }
 
 
-const handlePagination = (pageNumber) => {
-  console.log(pageNumber)
+const handlePagination = (e ) => {
+  setCurrentPage(e)
+  getData(e)
+  setIsLoading(true)
 }
+
 
 
   if(isLoading) {
@@ -49,7 +63,7 @@ const handlePagination = (pageNumber) => {
           return <RouteCard  key={index} data={eachRoute}/>
         })}
         </div>
-        <Pagination showQuickJumper defaultCurrent={2} total={10} onChange={handlePagination} />
+        <Pagination defaultCurrent={currentPage} total={totalElement} onShowSizeChange={onShowSizeChange} onChange={handlePagination}/>
     </div>
   )
 }

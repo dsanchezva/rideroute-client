@@ -2,15 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../../services/config";
 import RouteCard from "../../components/RouteCard";
-import { Pagination, ConfigProvider, Divider } from "antd";
+import { Pagination, ConfigProvider, Divider, Input, Form,Space } from "antd";
 import { ThemeContext } from "../../context/theme.context";
-const onShowSizeChange = (current, pageSize) => {
-  console.log(current, pageSize);
-};
+import { AudioOutlined } from '@ant-design/icons';
+const { Search } = Input;
 
 function RoutesList() {
   const navigate = useNavigate();
-
+  const { darkTheme } = useContext(ThemeContext);
   const [allRoutes, setAllRoutes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +36,32 @@ function RoutesList() {
       navigate("/error");
     }
   };
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
+    width: "300px",
+    marginBottom: "10px",
+  };
+  const onSearch = async (value, _e, info) => {
+    console.log(info?.source);
+    console.log(value)
+    try {
+      if (!value == "" || !info?.source == "clear") {
+      const response = await service.patch("/routes/search", {
+        value,})
+      setAllRoutes(response.data);
+      } else {
+        getData()
+      }
 
+    }catch (err) {
+      navigate("/error");
+    }
+
+  
+  
+  }
+  
+  
   const handlePagination = (e) => {
     setCurrentPage(e);
     getData(e);
@@ -58,6 +82,16 @@ function RoutesList() {
   return (
     <div className="route-container">
       <h1>All routes</h1>
+      
+    <Search
+      placeholder="Search by username"
+      allowClear
+      enterButton="Search"
+      size="large"
+      onSearch={onSearch}
+      style={styleHandler}
+    />
+      
       <div id="list-container">
         {allRoutes.map((eachRoute, index) => {
           return <RouteCard key={index} data={eachRoute} />;

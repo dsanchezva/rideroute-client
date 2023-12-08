@@ -134,14 +134,15 @@ function RouteEdit() {
           style={styleHandler}
         />
         <Divider />
-        <Button
-          type="primary"
-          onClick={handleSetNewDestiny}
-          style={styleHandler}
-        >
+        <Button type="primary" onClick={handleSetNewDestiny}>
           Set Destiny
         </Button>
-        <Input type="text" value={clickedPositionDestiny} disabled={true} />
+        <Input
+          type="text"
+          value={clickedPositionDestiny}
+          disabled={true}
+          style={styleHandler}
+        />
         <Divider />
         <Button type="primary" onClick={handleUpdateRouter}>
           Route view

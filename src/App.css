@@ -126,20 +126,11 @@ header {
 .edit-container textarea {
   width: 100%;
 }
-.Navbar {
-  /* display: flex;
-  flex-direction: row; */
-  /* justify-content: space-around; */
-}
+
 .Navbar img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  width: 150px;
-}
-.navbar-btn {
-  /* display: flex;
-  flex-direction: row; */
 }
 
 .routeInfo-user {

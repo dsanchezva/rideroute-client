@@ -32,17 +32,17 @@ function RouteEdit() {
 
   const [markerOriginVisible, setMarkerOriginVisible] = useState(true);
   const [markerDestinyVisible, setMarkerDestinyVisible] = useState(true);
-
+  //set the new Origin position from click on the map
   const handleSetNewOrigin = () => {
     setMarkerOriginVisible(false);
     setOrigin(clickedPositionOrigin);
   };
-
+  //set the new Destiny position from click on the map
   const handleSetNewDestiny = () => {
     setMarkerDestinyVisible(false);
     setDestiny(clickedPositionDestiny);
   };
-
+  //reload the page to see on map the new reoute
   const handleUpdateRouter = () => {
     setIsLoading(true);
   };
@@ -54,7 +54,7 @@ function RouteEdit() {
       setIsLoading(false);
     }
   }, [handleUpdateRouter]);
-
+  // call to db to sear the actual coordinates in the DB
   const getRouteToEdit = async () => {
     try {
       const response = await service.get(`/routes/${params.routeId}/info`);

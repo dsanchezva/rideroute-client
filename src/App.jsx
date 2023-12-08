@@ -24,7 +24,6 @@ import UserEditImage from "./pages/user/UserEditImage";
 
 function App() {
   const { selectedPageTheme } = useContext(ThemeContext);
-  console.log(selectedPageTheme);
   return (
     <div className={selectedPageTheme}>
       <Navbar />

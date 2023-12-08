@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../../services/config";
 import RouteCard from "../../components/RouteCard";
-import { Pagination, ConfigProvider, Divider, Input, Form,Space } from "antd";
+import { Pagination, ConfigProvider, Divider, Input, Form, Space } from "antd";
 import { ThemeContext } from "../../context/theme.context";
-import { AudioOutlined } from '@ant-design/icons';
 const { Search } = Input;
 
 function RoutesList() {
@@ -42,33 +41,28 @@ function RoutesList() {
     marginBottom: "10px",
   };
   const onSearch = async (value, _e, info) => {
-    console.log(info?.source);
-    console.log(value)
     try {
       if (!value == "" || !info?.source == "clear") {
-      const response = await service.patch("/routes/search", {
-        value,})
-      setAllRoutes(response.data);
+        const response = await service.patch("/routes/search", {
+          value,
+        });
+        setAllRoutes(response.data);
       } else {
-        getData()
+        getData();
       }
-
-    }catch (err) {
+    } catch (err) {
       navigate("/error");
     }
+  };
 
-  
-  
-  }
-  
-  
   const handlePagination = (e) => {
     setCurrentPage(e);
     getData(e);
     setIsLoading(true);
   };
   const style = {
-    color: "white"};
+    color: "white",
+  };
   if (isLoading) {
     return (
       <div>
@@ -82,36 +76,36 @@ function RoutesList() {
   return (
     <div className="route-container">
       <h1>All routes</h1>
-      
-    <Search
-      placeholder="Search by username"
-      allowClear
-      enterButton="Search"
-      size="large"
-      onSearch={onSearch}
-      style={styleHandler}
-    />
-      
+
+      <Search
+        placeholder="Search by username"
+        allowClear
+        enterButton="Search"
+        size="large"
+        onSearch={onSearch}
+        style={styleHandler}
+      />
+
       <div id="list-container">
         {allRoutes.map((eachRoute, index) => {
           return <RouteCard key={index} data={eachRoute} />;
         })}
       </div>
-      <Divider/>
+      <Divider />
       <ConfigProvider
-    theme={{
-      token: {
-        // Seed Token
+        theme={{
+          token: {
+            // Seed Token
             colorText: "#FFFFFF",
-      },
-    }}
-  >
-      <Pagination
-        defaultCurrent={currentPage}
-        total={totalElement}
-        onShowSizeChange={onShowSizeChange}
-        onChange={handlePagination}
-      />
+          },
+        }}
+      >
+        <Pagination
+          defaultCurrent={currentPage}
+          total={totalElement}
+          onShowSizeChange={onShowSizeChange}
+          onChange={handlePagination}
+        />
       </ConfigProvider>
     </div>
   );

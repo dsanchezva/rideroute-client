@@ -28,6 +28,7 @@ function RouteCreate() {
     const arrNumber = convertToArr.map((each) => Number(each));
     setOrigin(arrNumber);
   };
+
   const handleDestiny = (e) => {
     const response = e.target.value;
     const convertToArr = response.split(",");
@@ -65,7 +66,6 @@ function RouteCreate() {
           coordinates: [each.latitude, each.longitude],
         };
       });
-      console.log(dataToRender);
       handleOptions();
 
       setAllOriginAddresses(dataToRender);
@@ -125,11 +125,11 @@ function RouteCreate() {
       }
     }
   };
-
+  //theme dark and light
   const styleHandler = {
     color: darkTheme ? "white" : "black",
   };
-
+  // change the received data to visualize and save the coordinates
   const handleOptions = () => {
     let optionsArray = [];
     allOriginAddresses.map((eachOrigin) => {
@@ -139,7 +139,6 @@ function RouteCreate() {
       });
     });
     setOriginSelect(optionsArray);
-    console.log(optionsArray);
   };
 
   return (
@@ -184,12 +183,6 @@ function RouteCreate() {
       <Divider />
 
       <Form>
-        {/* <Select
-          name="origin"
-          onChange={handleOrigin}
-          placeholder="Select Origin Adress :"
-          options={originSelect}
-        /> */}
         <select name="origin" onChange={handleOrigin}>
           <option>Select Origin Adress : </option>
           {allOriginAddresses.map((eachOrigin, index) => {

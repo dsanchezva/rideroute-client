@@ -30,7 +30,6 @@ function Login() {
       await authenticateUser();
       navigate("/home");
     } catch (err) {
-      console.log(err);
       if (err.response && err.response.status === 400) {
         setErrorMessage(err.response.data.errorMessage);
       } else {

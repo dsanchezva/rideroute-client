@@ -18,7 +18,6 @@ const AuthWrapper = (props) => {
         setIsLoading(false);
       }, 2500);
     } catch (err) {
-      console.log(err);
       setIsLoggedIn(false);
       setIsLoading(false);
     }

@@ -127,9 +127,18 @@ function RouteEdit() {
         <Button type="primary" onClick={handleSetNewOrigin}>
           Set Origin
         </Button>
-        <Input type="text" value={clickedPositionOrigin} disabled={true} />
+        <Input
+          type="text"
+          value={clickedPositionOrigin}
+          disabled={true}
+          style={styleHandler}
+        />
         <Divider />
-        <Button type="primary" onClick={handleSetNewDestiny}>
+        <Button
+          type="primary"
+          onClick={handleSetNewDestiny}
+          style={styleHandler}
+        >
           Set Destiny
         </Button>
         <Input type="text" value={clickedPositionDestiny} disabled={true} />

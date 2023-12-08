@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import service from "../../services/config";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, PictureOutlined } from "@ant-design/icons";
 import { Button, Card, Divider, Modal } from "antd";
 
 function Profile() {
@@ -90,8 +90,16 @@ function Profile() {
     navigate("/editUser");
   };
 
+  const handleEditUserPicture = () => {
+    navigate("/editUserPicture");
+  };
+
   const handleEditMoto = () => {
     navigate("/editMoto");
+  };
+
+  const handleEditMotoPicture = () => {
+    navigate("/editMotoPicture");
   };
 
   return (
@@ -103,7 +111,10 @@ function Profile() {
         <Card
           style={styleProfile}
           cover={<img alt="ProfilePicture" src={userPicture} />}
-          actions={[<EditOutlined key="edit" onClick={handleEditUser} />]}
+          actions={[
+            <EditOutlined key="edit" onClick={handleEditUser} />,
+            <PictureOutlined key="picture" onClick={handleEditUserPicture} />,
+          ]}
         >
           <p>Username : {username}</p>
           <p>Email : {email}</p>
@@ -114,7 +125,10 @@ function Profile() {
         <Card
           style={styleProfile}
           cover={<img alt="ProfilePicture" src={motoPicture} />}
-          actions={[<EditOutlined key="edit" onClick={handleEditMoto} />]}
+          actions={[
+            <EditOutlined key="edit" onClick={handleEditMoto} />,
+            <PictureOutlined key="picture" onClick={handleEditMotoPicture} />,
+          ]}
         >
           <p>Maker : {motoMake}</p>
           <p>Model : {motoModel}</p>

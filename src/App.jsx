@@ -19,6 +19,8 @@ import UserEdit from "./pages/user/UserEdit";
 import { ThemeContext } from "./context/theme.context";
 import CommentEdit from "./pages/comment/CommentEdit";
 import Footer from "./components/Footer";
+import EditMotorbikeImage from "./pages/user/userMotorbike/EditMotorbikeImage";
+import UserEditImage from "./pages/user/UserEditImage";
 
 function App() {
   const { selectedPageTheme } = useContext(ThemeContext);
@@ -46,6 +48,22 @@ function App() {
           element={
             <IsPrivate>
               <UserEdit />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/editUserPicture"
+          element={
+            <IsPrivate>
+              <UserEditImage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/editMotoPicture"
+          element={
+            <IsPrivate>
+              <EditMotorbikeImage />
             </IsPrivate>
           }
         />
@@ -134,7 +152,7 @@ function App() {
         <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

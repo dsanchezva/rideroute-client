@@ -1,17 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../../../services/config";
+import { Button, Divider, Form, Input } from "antd";
+import { ThemeContext } from "../../../context/theme.context";
 
 function EditMotorbike() {
   const navigate = useNavigate();
   const [modelValue, setModelValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isUploading, setIsUploading] = useState(false);
+  const { darkTheme } = useContext(ThemeContext);
 
   const [makeValue, setMakeValue] = useState("");
   const [modelSelected, setModelSelected] = useState("");
   const [yearSelected, setYearSelected] = useState(0);
-  const [imageSelected, setImageSelected] = useState(null);
 
   const handleMake = (e) => {
     setMakeValue(e.target.value);
@@ -30,25 +31,7 @@ function EditMotorbike() {
   };
 
   const handleYear = (e) => setYearSelected(e.target.value);
-  const handleImage = async (e) => {
-    if (!e.target.files[0]) {
-      return;
-    }
-    setIsUploading(true);
-    const uploadData = new FormData();
-    uploadData.append("motoPicture", e.target.files[0]);
 
-    try {
-      const response = await service.patch(
-        "/user/uploadMotoPicture",
-        uploadData
-      );
-      setImageSelected(response.data.motoPicture);
-      setIsUploading(false);
-    } catch (error) {
-      navigate("/error");
-    }
-  };
   const handleSelectOnChange = (e) => setModelSelected(e.target.value);
 
   useEffect(() => {
@@ -70,20 +53,12 @@ function EditMotorbike() {
       navigate("/error");
     }
   };
-  const handleSubmitPicture = async (e) => {
-    e.preventDefault();
-    try {
-      await service.patch("/user/editMotorbikePicture", {
-        motoPicture: imageSelected,
-      });
-      navigate("/profile");
-    } catch (error) {
-      console.log(error);
-      navigate("/error");
-    }
+
+  const styleHandler = {
+    color: darkTheme ? "white" : "black",
   };
 
-  if (isLoading === true || isUploading === true) {
+  if (isLoading === true) {
     return (
       <div>
         <div id="loop" className={"center"}></div>
@@ -97,58 +72,62 @@ function EditMotorbike() {
   return (
     <div>
       <h1>EDIT MOTORBIKE</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="make">Maker : </label>
-        <input
-          type="text"
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        initialValues={{
+          remember: true,
+        }}
+      >
+        <Form.Item
+          label={<label style={styleHandler}>Maker</label>}
           name="make"
-          value={makeValue}
-          onChange={handleMake}
-        />
-        <br />
-        <label htmlFor="model">Model : </label>
-        <select name="model" onChange={handleSelectOnChange}>
-          <option value="">Select model : </option>
-          {modelValue.map((eachModel, index) => {
-            return (
-              <option key={index} value={eachModel}>
-                {eachModel}
-              </option>
-            );
-          })}
-        </select>
-        <br />
-        <label htmlFor="year">Year : </label>
-        <input
-          type="number"
-          name="year"
-          onChange={handleYear}
-          value={yearSelected}
-        />
-        <br />
-        <button type="submit">Update</button>
-        <br />
-        <br />
-      </form>
-      <form onSubmit={handleSubmitPicture}>
-        <label htmlFor="motoPicture">Motorbike image : </label>
-        <input
-          type="file"
-          name="motoPicture"
-          accept="image/png, image/jpeg"
-          onChange={handleImage}
-          disabled={isUploading}
-        />
-
-        <br />
-        <button type="submit">Update motorbike picture</button>
-      </form>
-      <br />
-      {imageSelected ? (
-        <div>
-          <img src={imageSelected} alt="img" width={200} />
-        </div>
-      ) : null}
+        >
+          <Input
+            type="text"
+            name="make"
+            value={makeValue}
+            onChange={handleMake}
+          />
+        </Form.Item>
+        <Form.Item
+          label={<label style={styleHandler}>Model</label>}
+          name="model"
+        >
+          <select name="model" onChange={handleSelectOnChange}>
+            <option value="">Select model : </option>
+            {modelValue.map((eachModel, index) => {
+              return (
+                <option key={index} value={eachModel}>
+                  {eachModel}
+                </option>
+              );
+            })}
+          </select>
+        </Form.Item>
+        <Form.Item label={<label style={styleHandler}>Year</label>} name="year">
+          <Input
+            type="number"
+            name="year"
+            onChange={handleYear}
+            value={yearSelected}
+          />
+        </Form.Item>
+        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+          Update
+        </Button>
+      </Form>
+      <Divider />
     </div>
   );
 }
